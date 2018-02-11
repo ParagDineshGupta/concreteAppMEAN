@@ -7,3 +7,39 @@ ul.breadcrumb{
 .well{
     background:#fff;
 }
+.callLogsEntries div{
+    padding:5px;
+    background:#fbfbfb;
+    color:#3f3f3f;
+    border-radius: 5px;
+    margin:15px;
+    /* border:2px solid #3f3f3f; */
+}
+.callLogsEntries div{
+    font-size: 14px;
+    color:#9d9d9d;
+}
+.callLogsEntries div span{
+    color:#f1bf18;
+    font-size:14px;
+}
+.callLogsEntries div p{
+    font-size: 22px;
+    color:#3f3f3f;
+    font-weight: 500;
+}
+.payment_date{
+    color:#3f3f3f;
+    display: inline-block;
+}
+.payment-entry-content span{
+    display: inline;
+}
+.load-more-my-leads{
+    width:100%;
+    height:30px;
+    font-size:18px;
+    background: #dfdfdf;
+    text-align: center;
+    cursor:pointer;
+}

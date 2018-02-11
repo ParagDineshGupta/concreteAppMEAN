@@ -1,5 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+import { BaseService } from './services/base.service';
+import { AuthGuard } from './auth/auth-guard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FooterModule } from './common/footer/footer.module';
@@ -18,6 +23,8 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { AddInvoiceComponent } from './invoice/add-invoice/add-invoice.component';
 import { AllInvoiceComponent } from './invoice/all-invoice/all-invoice.component';
 import { AllUsersComponent } from './all-users/all-users.component';
+import { DetailsComponent } from './leads/details/details.component';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -33,16 +40,21 @@ import { AllUsersComponent } from './all-users/all-users.component';
     InvoiceComponent,
     AddInvoiceComponent,
     AllInvoiceComponent,
-    AllUsersComponent
+    AllUsersComponent,
+    DetailsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FooterModule,
     NavbarModule,
-    SidebarModule
+    SidebarModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CookieService, BaseService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

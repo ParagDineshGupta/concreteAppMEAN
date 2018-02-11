@@ -9,6 +9,9 @@ import { ArchiveLeadsComponent } from './leads/archive-leads/archive-leads.compo
 import { AddInvoiceComponent } from './invoice/add-invoice/add-invoice.component';
 import { AllInvoiceComponent } from './invoice/all-invoice/all-invoice.component';
 import { AllUsersComponent } from './all-users/all-users.component';
+import { DetailsComponent } from './leads/details/details.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth/auth-guard';
 
 
 const routes: Routes = [
@@ -19,39 +22,62 @@ const routes: Routes = [
   },
   {
 	  path:'dashboard',
-	  component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
 	  path:'user',
-	  component:UserComponent
+    component:UserComponent,
+    canActivate: [AuthGuard]
   },
   {
 	  path: 'leads',
-	  component:LeadsComponent
+    component:LeadsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'addleads',
-    component: AddLeadsComponent
+    component: AddLeadsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'allleads',
-    component:AllLeadsComponent
+    component:AllLeadsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'archiveleads',
-    component:ArchiveLeadsComponent
+    component:ArchiveLeadsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'addinvoice',
-    component:AddInvoiceComponent
+    component:AddInvoiceComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'allinvoice',
-    component:AllInvoiceComponent
+    component:AllInvoiceComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'allusers',
-    component:AllUsersComponent
+    component:AllUsersComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'leads/details/:id',
+    component: DetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'addleads/:id/:email',
+    component: AddLeadsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 

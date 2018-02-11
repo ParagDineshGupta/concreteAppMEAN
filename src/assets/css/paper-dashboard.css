@@ -4009,7 +4009,7 @@ Copyright (c) 2015 Daniel Eden
   vertical-align: top;
 }
 #dashboard-top-panel table tbody tr td span{
-  font-size:25px;
+  font-size:14px;
 }
 #dashboard-top-panel table tbody tr td span.text-warning{
   font-size:18px;
@@ -4054,7 +4054,7 @@ Copyright (c) 2015 Daniel Eden
   vertical-align: top;
 }
 #all-leads-panel table tbody tr td span{
-  font-size:25px;
+  font-size:14px;
 }
 #all-leads-panel table tbody tr td span.text-warning{
   font-size:18px;
@@ -4094,6 +4094,40 @@ Copyright (c) 2015 Daniel Eden
   color:#F3BB45;
   font-size:20px;
   margin-bottom:20px;
+}
+
+
+.TURQUOISE{
+	background-color: #1abc9c;
+	border-color: #1abc9c;
+}
+.MIDNIGHT_BLUE{
+	background-color: #2c3e50;
+	border-color: #2c3e50;
+}
+.WISTERIA{
+	background-color: #8e44ad;
+	border-color: #8e44ad;
+}
+.ALIZARIN{
+	background-color: #e74c3c;
+	border-color: #e74c3c;
+}
+.OCTA{
+	background-color: #2ecc71;
+	border-color: #2ecc71;
+}
+.SUNFLOWER{
+	background-color: #f1c40f;
+	border-color: #f1c40f;
+}
+.POMEGRANATE{
+	background-color: #c0392b;
+	border-color: #c0392b;
+}
+.GROSS{
+	background-color: #000;
+	border-color: #000;
 }
 
 .payments-entry div img{
@@ -4321,4 +4355,8 @@ hr{
 
 .platform-select-checkboxes hr{
   margin-top:130px;
+}
+
+.Custom_label{
+  font-size:14px;
 }

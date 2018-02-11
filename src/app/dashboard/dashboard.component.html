@@ -1,318 +1,205 @@
-<div class="container-fluid">
-    <div class="well well-sm">
-        <ul class="breadcrumb">
-            <li><a routerLink="/dashboard">Home</a></li>
-            <li>Dashboard</li>
-        </ul>
-        <a class="pull-right" routerLink="/addleads"><button class="btn btn-info">Add a new lead</button></a>
+<div class="wrapper">
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
+        <sidebar-cmp></sidebar-cmp>
     </div>
-    
-    <div class="col-md-8 col-sm-12" >
-        <div class="panel panel-primary" id="dashboard-top-panel" >
-            <div class="panel-body " id="dashboard-top-panel-body" > <span class="fa fa-paper-plane"></span> My Leads</div>
-        
-            <table class="table table-responsive table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th colspan="2">
-                             Project Name
-                        </th>
-                        <th>Client</th>
-                        <th>Payment</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2">App development <br>
-                            <span class="text-warning"><span class="fa fa-clock-o"></span>Jan 18, 2018</span>
+    <div class="main-panel">
+        <navbar-cmp></navbar-cmp>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="dashboard-well well well-sm">
+                    <ul class="breadcrumb">
+                        <li><a routerLink="/dashboard">Home</a></li>
+                        <li>Dashboard</li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-8 col-sm-12" >
+                    <div class="panel panel-primary" id="dashboard-top-panel" >
+                        <div class="panel-body " id="dashboard-top-panel-body" > <span class="fa fa-paper-plane"></span> My Leads</div>
+                    
+                        <table class="table table-responsive table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th >
+                                        Project Name
+                                    </th>
+                                    <th>Client</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor = "let entry of myLeads">
+                                    <td >
+                                            <a [routerLink] = "['/leads/details/', entry.project_id]">{{entry.project_name}} </a><br>
+                                        <span class="text-warning"><span class="fa fa-clock-o"></span>{{entry.project_add_date}}</span>
+                                        <br>
+                                        <div class="platformlogos">
+                                            <span  class="fa {{class}}" *ngFor="let class of entry.project_platform_classes"></span>
+                                        </div>
+                                    </td>
+                                    <td>   <b>   {{entry.project_client_name}} </b>   <br>
+                                            <span class="text-primary"> <span class="fa fa-envelope"></span> {{entry.project_client_email}} </span> <br>
+                                        <span class="text-info"> <span class="fa fa-mobile-phone"></span> {{entry.project_client_contact_no}} </span>    
+                                    </td>
+                                    <td>
+                                        Est-budget:<b><span *ngIf="entry.project_budget_unit == 1" class="fa fa-rupee"></span>
+                                            <span  *ngIf="entry.project_budget_unit == 2" class="fa fa-dollar"></span>{{entry.project_estimate_budget}}</b><br>
+                                        Upfront:<b><span *ngIf="entry.project_budget_unit == 1" class="fa fa-rupee"></span>
+                                            <span  *ngIf="entry.project_budget_unit == 2" class="fa fa-dollar"></span>{{entry.project_payment_amount}}</b><br>
+                                        <span class="fa fa-clock-o"></span>{{entry.project_payment_recieved_date}} 
+                                    </td>
+                                    <td>
+                                        <span class="label .Custom_label {{entry.project_status_class_name}}">{{entry.project_status_name}}</span>
+                                        <p> <b>{{entry.current_status_by}}</b> </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a (click)="loadMoreMyLeads()" [ngClass]="(moreMyLeadsAvailable) ? 'inactive-link' : '' " class="load-more-my-leads">
+                            <span class="center">Load More</span> 
+                        </a>
+                    </div>
+                    <div class="panel panel-danger" id="all-leads-panel">
+                        <div class="panel-body" ><span class="fa fa-paper-plane"></span>  All Leads</div>
+                        <table class="table table-responsive table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Project Name</th>
+                                    <th>Client</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr *ngFor="let lead of allLeads">
+                                        <td colspan="2">
+                                                <a [routerLink] = "['/leads/details/', lead.project_id]">{{lead.project_name}} </a><br>
+                                            <span class="text-warning"><span class="fa fa-clock-o"></span>{{lead.project_add_date}}</span>
+                                            <br>
+                                            <span class="icon-success"><span class="fa fa-android"></span></span>
+                                        </td>
+                                        <td>   <b>   {{lead.project_client_name}} </b>   <br>
+                                                <span class="text-primary"> <span class="fa fa-envelope"></span> {{lead.project_client_email}} </span> <br>
+                                            <span class="text-info"> <span class="fa fa-mobile-phone"></span> {{lead.project_client_contact_no}} </span>    
+                                        </td>
+                                        <td> 
+                                            Est-budget:<b><span *ngIf="lead.project_budget_unit == 1" class="fa fa-rupee"></span>
+                                                <span  *ngIf="lead.project_budget_unit == 2" class="fa fa-dollar"></span>{{lead.project_estimate_budget}}</b><br>
+                                            Upfront:<b><span *ngIf="lead.project_budget_unit == 1" class="fa fa-rupee"></span>
+                                                <span  *ngIf="lead.project_budget_unit == 2" class="fa fa-dollar"></span>{{lead.project_payment_amount}}</b><br>
+                                            <span class="fa fa-clock-o"></span>{{lead.project_payment_recieved_date}} 
+                                        </td>
+                                        <td>
+                                            <span class="label .Custom_label {{lead.project_status_class_name}}">{{lead.project_status_name}}</span>
+                                            <p> <b>{{lead.current_status_by}}</b> </p>
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                        <a (click)="loadMoreAllLeads()" [ngClass]="(moreAllLeadsAvailable) ? 'inactive-link' : '' " class="load-more-my-leads">
+                            <span class="center">Load More</span> 
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <!-- <div class="panel panel-primary payments-today-stats">
+                        <div class="panel-body"> <span class="fa fa-money"></span> Received Payments Jan-18</div>
+                        <div class="">
+                            <!-- <div class="payments-entry" *ngFor="let entry of twep">
+                                <div><img src="{{entry.user_profile_pic}}" alt="" class="img-rounded"></div>
+                                <div class="payment-entry-content">
+                                    <p><b>{{entry.user_name}}</b></p>
+                                    <span class="fa fa-inr">{{entry.project_payment_amount}}</span>
+                                </div>
+                                <hr>
+                            </div> -->
+                            <!-- <div class="payments-entry">
+                                <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
+                                <div class="payment-entry-content">
+                                    <p><b>Aditi Chaurasia</b></p>
+                                    <span class="fa fa-inr">45000</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="payments-entry">
+                                <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
+                                <div class="payment-entry-content">
+                                    <p><b>Aditi Chaurasia</b></p>
+                                    <span class="fa fa-inr">45000</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="payments-entry">
+                                <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
+                                <div class="payment-entry-content">
+                                    <p><b>Aditi Chaurasia</b></p>
+                                    <span class="fa fa-inr">45000</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="payments-entry">
+                                <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
+                                <div class="payment-entry-content">
+                                    <p><b>Aditi Chaurasia</b></p>
+                                    <span class="fa fa-inr">45000</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="payments-entry">
+                                <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
+                                <div class="payment-entry-content">
+                                    <p><b>Aditi Chaurasia</b></p>
+                                    <span class="fa fa-inr">45000</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="payments-entry">
+                                <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
+                                <div class="payment-entry-content">
+                                    <p><b>Aditi Chaurasia</b></p>
+                                    <span class="fa fa-inr">45000</span>
+                                </div>
+                            </div> 
                             <br>
-                            <span class="icon-success"><span class="fa fa-android"></span></span>
-                        </td>
-                        <td>   <b>Ram Sharma</b>   <br>
-                             <span class="text-primary"> <span class="fa fa-envelope"></span> ram.sharma@gmail.com</span> <br>
-                            <span class="text-info"> <span class="fa fa-mobile-phone"></span> 8763645362</span>    
-                        </td>
-                        <td> 
-                             Est-budget:<b><span class="fa fa-rupee"></span>45000</b> 
-                        </td>
-                        <td>
-                            <span class="label label-warning">Requirement Gathering</span>
-                            <p> <b>Prachi Agrawal</b> </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Web and App development <br>
-                            <span class="text-warning"><span class="fa fa-clock-o"></span>Jan 18, 2018</span>
-                            <br>
-                            <span class="icon-primary"><span class="fa fa-globe"></span></span>
-                            <span class="icon-success"><span class="fa fa-android"></span></span>
-                            <span class="icon-info"><span class="fa fa-apple"></span></span>
-                        </td>
-                        <td>   <b>Akshat Ghale</b>   <br>
-                                <span class="text-primary"> <span class="fa fa-envelope"></span> ak.ghale@orkut.com</span> <br>
-                            <span class="text-info"> <span class="fa fa-mobile-phone"></span> 325356366</span>    
-                        </td>
-                        <td> 
-                                Est-budget:<b><span class="fa fa-rupee"></span>24,25,300</b> 
-                        </td>
-                        <td>
-                            <span class="label label-warning">Ongoing Gathering</span>
-                            <p> <b>Bhanu Agrawal</b> </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Web development <br>
-                            <span class="text-warning"><span class="fa fa-clock-o"></span>Dec 18, 2017</span>
-                            <br>
-                            <span class="icon-primary"><span class="fa fa-globe"></span></span>
-                        </td>
-                        <td>   <b>Manohar Mishra</b>   <br>
-                                <span class="text-primary"> <span class="fa fa-envelope"></span> manohar.harhar@gmail.com</span> <br>
-                            <span class="text-info"> <span class="fa fa-mobile-phone"></span> 4312758793827</span>    
-                        </td>
-                        <td> 
-                                Est-budget:<b><span class="fa fa-dollar"></span>325,000</b> 
-                        </td>
-                        <td>
-                            <span class="label label-warning">Development Ongoing</span>
-                            <p> <b>Kartika Mishra</b> </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </div>
+                    </div> -->
+                    <div class="panel" id="expected-payments-panel">
+                        <div class="panel-body"> <span class="fa fa-money"></span> Today's Expected Payment's</div>
+                        <div class="payments-entry" *ngFor="let entry of gtep">
+                            <div><img src="{{entry.user_profile_pic}}" alt="" class="img-rounded"></div>
+                            <div class="payment-entry-content">
+                                <p><b>{{entry.user_name}}</b> for <b>{{entry.project_name}}</b></p>
+                                <span class="fa fa-inr">{{entry.project_payment_amount}}</span>
+                                <span class="fa fa-clock-o payment_date"></span>{{entry.project_payment_recieved_date}}                 
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="panel payments-today-stats" >
+                        <div class="panel-body"> <span class="fa fa-money"></span> This Week's Expected Payment's</div>
+                        <div class="payments-entry" *ngFor="let entry of twep">
+                            <div><img src="{{entry.user_profile_pic}}" alt="" class="img-rounded"></div>
+                            <div class="payment-entry-content">
+                                <p><b>{{entry.user_name}}</b> for <b>{{entry.project_name}}</b></p>
+                                <span class="fa fa-inr">{{entry.project_payment_amount}}</span>
+                                <span class="fa fa-clock-o payment_date"></span>{{entry.project_payment_recieved_date}}
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="panel" id="expected-payments-panel">
+                        <div class="panel-body"> <span class="fa fa-line-chart">  </span>  Progress</div>
+                        <div class="callLogsEntries" >
+                            <div *ngFor="let log of callLogs">
+                                    <span class="fa fa-clock-o"></span>{{log.project_call_datetime}}
+                                    <p>{{log.project_call_description}}</p>
+                            </div>
+                        </div>      
+                    </div>
+                </div>    
+            </div>
         </div>
-        <div class="panel panel-danger" id="all-leads-panel">
-            <div class="panel-body" ><span class="fa fa-paper-plane"></span>  All Leads</div>
-            <table class="table table-responsive table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th colspan="2">Project Name</th>
-                        <th>Client</th>
-                        <th>Payment</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        <tr>
-                            <td colspan="2">App development <br>
-                                <span class="text-warning"><span class="fa fa-clock-o"></span>Jan 18, 2018</span>
-                                <br>
-                                <span class="icon-success"><span class="fa fa-android"></span></span>
-                            </td>
-                            <td>   <b>Ram Sharma</b>   <br>
-                                    <span class="text-primary"> <span class="fa fa-envelope"></span> ram.sharma@gmail.com</span> <br>
-                                <span class="text-info"> <span class="fa fa-mobile-phone"></span> 8763645362</span>    
-                            </td>
-                            <td> 
-                                    Est-budget:<b><span class="fa fa-rupee"></span>45000</b> 
-                            </td>
-                            <td>
-                                <span class="label label-warning">Requirement Gathering</span>
-                                <p> <b>Prachi Agrawal</b> </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Web and App development <br>
-                                <span class="text-warning"><span class="fa fa-clock-o"></span>Jan 18, 2018</span>
-                                <br>
-                                <span class="icon-primary"><span class="fa fa-globe"></span></span>
-                                <span class="icon-success"><span class="fa fa-android"></span></span>
-                                <span class="icon-info"><span class="fa fa-apple"></span></span>
-                            </td>
-                            <td>   <b>Akshat Ghale</b>   <br>
-                                    <span class="text-primary"> <span class="fa fa-envelope"></span> ak.ghale@orkut.com</span> <br>
-                                <span class="text-info"> <span class="fa fa-mobile-phone"></span> 325356366</span>    
-                            </td>
-                            <td> 
-                                    Est-budget:<b><span class="fa fa-rupee"></span>24,25,300</b> 
-                            </td>
-                            <td>
-                                <span class="label label-warning">Ongoing Gathering</span>
-                                <p> <b>Bhanu Agrawal</b> </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Web development <br>
-                                <span class="text-warning"><span class="fa fa-clock-o"></span>Dec 18, 2017</span>
-                                <br>
-                                <span class="icon-primary"><span class="fa fa-globe"></span></span>
-                            </td>
-                            <td>   <b>Manohar Mishra</b>   <br>
-                                    <span class="text-primary"> <span class="fa fa-envelope"></span> manohar.harhar@gmail.com</span> <br>
-                                <span class="text-info"> <span class="fa fa-mobile-phone"></span> 4312758793827</span>    
-                            </td>
-                            <td> 
-                                    Est-budget:<b><span class="fa fa-dollar"></span>325,000</b> 
-                            </td>
-                            <td>
-                                <span class="label label-warning">Development Ongoing</span>
-                                <p> <b>Kartika Mishra</b> </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">App development <br>
-                                <span class="text-warning"><span class="fa fa-clock-o"></span>Jan 18, 2018</span>
-                                <br>
-                                <span class="icon-success"><span class="fa fa-android"></span></span>
-                            </td>
-                            <td>   <b>Ram Sharma</b>   <br>
-                                    <span class="text-primary"> <span class="fa fa-envelope"></span> ram.sharma@gmail.com</span> <br>
-                                <span class="text-info"> <span class="fa fa-mobile-phone"></span> 8763645362</span>    
-                            </td>
-                            <td> 
-                                    Est-budget:<b><span class="fa fa-rupee"></span>45000</b> 
-                            </td>
-                            <td>
-                                <span class="label label-warning">Requirement Gathering</span>
-                                <p> <b>Prachi Agrawal</b> </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Web and App development <br>
-                                <span class="text-warning"><span class="fa fa-clock-o"></span>Jan 18, 2018</span>
-                                <br>
-                                <span class="icon-primary"><span class="fa fa-globe"></span></span>
-                                <span class="icon-success"><span class="fa fa-android"></span></span>
-                                <span class="icon-info"><span class="fa fa-apple"></span></span>
-                            </td>
-                            <td>   <b>Akshat Ghale</b>   <br>
-                                    <span class="text-primary"> <span class="fa fa-envelope"></span> ak.ghale@orkut.com</span> <br>
-                                <span class="text-info"> <span class="fa fa-mobile-phone"></span> 325356366</span>    
-                            </td>
-                            <td> 
-                                    Est-budget:<b><span class="fa fa-rupee"></span>24,25,300</b> 
-                            </td>
-                            <td>
-                                <span class="label label-warning">Ongoing Gathering</span>
-                                <p> <b>Bhanu Agrawal</b> </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Web development <br>
-                                <span class="text-warning"><span class="fa fa-clock-o"></span>Dec 18, 2017</span>
-                                <br>
-                                <span class="icon-primary"><span class="fa fa-globe"></span></span>
-                            </td>
-                            <td>   <b>Manohar Mishra</b>   <br>
-                                    <span class="text-primary"> <span class="fa fa-envelope"></span> manohar.harhar@gmail.com</span> <br>
-                                <span class="text-info"> <span class="fa fa-mobile-phone"></span> 4312758793827</span>    
-                            </td>
-                            <td> 
-                                    Est-budget:<b><span class="fa fa-dollar"></span>325,000</b> 
-                            </td>
-                            <td>
-                                <span class="label label-warning">Development Ongoing</span>
-                                <p> <b>Kartika Mishra</b> </p>
-                            </td>
-                        </tr>
-                </tbody>
-            </table>
-        </div>
+        <footer-cmp></footer-cmp>
     </div>
-    <div class="col-md-4 col-sm-12">
-        <div class="panel panel-primary payments-today-stats">
-            <div class="panel-body"> <span class="fa fa-money"></span> Received Payments Jan-18</div>
-            <div class="">
-                <div class="payments-entry">
-                    <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
-                    <div class="payment-entry-content">
-                        <p><b>Aditi Chaurasia</b></p>
-                        <span class="fa fa-inr">45000</span>
-                    </div>
-                </div>
-                <hr>
-                <div class="payments-entry">
-                    <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
-                    <div class="payment-entry-content">
-                        <p><b>Aditi Chaurasia</b></p>
-                        <span class="fa fa-inr">45000</span>
-                    </div>
-                </div>
-                <hr>
-                <div class="payments-entry">
-                    <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
-                    <div class="payment-entry-content">
-                        <p><b>Aditi Chaurasia</b></p>
-                        <span class="fa fa-inr">45000</span>
-                    </div>
-                </div>
-                <hr>
-                <div class="payments-entry">
-                    <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
-                    <div class="payment-entry-content">
-                        <p><b>Aditi Chaurasia</b></p>
-                        <span class="fa fa-inr">45000</span>
-                    </div>
-                </div>
-                <hr>
-                <div class="payments-entry">
-                    <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
-                    <div class="payment-entry-content">
-                        <p><b>Aditi Chaurasia</b></p>
-                        <span class="fa fa-inr">45000</span>
-                    </div>
-                </div>
-                <hr>
-                <div class="payments-entry">
-                    <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
-                    <div class="payment-entry-content">
-                        <p><b>Aditi Chaurasia</b></p>
-                        <span class="fa fa-inr">45000</span>
-                    </div>
-                </div>
-                <hr>
-                <div class="payments-entry">
-                    <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/p160x160/16711865_1407883272557098_8935550450212197085_n.jpg?oh=4cb8b0d7239b5adee15f8f79fdc2ac9c&oe=5ACCF0FD" alt="" class="img-rounded"></div>
-                    <div class="payment-entry-content">
-                        <p><b>Aditi Chaurasia</b></p>
-                        <span class="fa fa-inr">45000</span>
-                    </div>
-                </div>
-                <br>
-            </div>
-        </div>
-        <div class="panel" id="expected-payments-panel">
-            <div class="panel-body"> <span class="fa fa-money"></span> Today's Expected Payment's</div>
-            <div class="payments-entry">
-                <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/c0.0.160.160/p160x160/13590416_864158107051100_8013470578086169655_n.jpg?oh=efe19d4df9f0518c8132a2b9860d0d24&oe=5AD35F85" alt="" class="img-rounded"></div>
-                <div class="payment-entry-content">
-                    <p><b>Kratika Sharma</b></p>
-                    <span class="fa fa-inr">45000</span>
-                </div>
-            </div>
-            <hr>
-            <div class="payments-entry">
-                <div><img src="https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-1/c0.0.160.160/p160x160/13590416_864158107051100_8013470578086169655_n.jpg?oh=efe19d4df9f0518c8132a2b9860d0d24&oe=5AD35F85" alt="" class="img-rounded"></div>
-                <div class="payment-entry-content">
-                    <p><b>Kratika Sharma</b></p>
-                    <span class="fa fa-inr">45000</span>
-                </div>
-            </div>
-            <hr>              
-        </div>
-        <div class="panel payments-today-stats" >
-            <div class="panel-body"> <span class="fa fa-money"></span> This Week's Expected Payment's</div>
-            <div class="payments-entry">
-                <div><img src="https://media.licdn.com/media/AAEAAQAAAAAAAAgvAAAAJGIzNGE1YjEyLWZjOTgtNGMyNy05ZjcyLWY3ZjYwOTU0YmRiNA.jpg" alt="" class="img-rounded"></div>
-                <div class="payment-entry-content">
-                    <p><b>Mayank Pratap</b></p>
-                    <span class="fa fa-inr">45000</span>
-                </div>
-            </div>
-            <hr>
-            <div class="payments-entry">
-                <div><img src="https://media.licdn.com/media/AAEAAQAAAAAAAAgvAAAAJGIzNGE1YjEyLWZjOTgtNGMyNy05ZjcyLWY3ZjYwOTU0YmRiNA.jpg" alt="" class="img-rounded"></div>
-                <div class="payment-entry-content">
-                    <p><b>Mayank Pratap</b></p>
-                    <span class="fa fa-inr">45000</span>
-                </div>
-            </div>
-            <hr>              
-        </div>
-        <div class="panel" id="expected-payments-panel">
-            <div class="panel-body"> <span class="fa fa-line-chart">  </span>  Progress</div>
-            <h3 class="disabled">Sorry no data found</h3>       
-        </div>
-    </div>    
 </div>

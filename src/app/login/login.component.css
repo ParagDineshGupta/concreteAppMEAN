@@ -1,0 +1,48 @@
+.loginimg{
+    height:100%;
+    padding:0px;
+    margin:0px;
+}
+.loginimg{
+    background-repeat: no-repeat;
+    background-image: url('../../assets/img/leadB.jpg');
+    background-size: cover;
+    min-height:100vh;
+}
+.loginform{
+    background: #f3f3f3;
+    min-height:100vh;
+}
+
+.form-block{
+    background:#fff;
+    z-index: 9999;
+    margin-top:35%;
+    vertical-align: middle;
+    box-shadow:5px 5px 5px 5px #e1e1e1;
+}
+.top-buttons{
+    width:100%;
+    background: #3f3f3f;
+}
+.top-buttons a{
+    width:100%;
+    font-size:28px;
+    color:#fff;
+    text-align: center;
+    display: inline-block;
+    padding:20px;
+    cursor:pointer;
+}
+.top-buttons a:hover, .top-buttons a.active{
+    color:#3ead98;
+}
+button span.fa{
+    color:#3f3f3f;
+}
+.top-buttons a:nth-child(1){
+    border:5px solid #5d5d5d;
+}
+.login-form, .signup-form{
+    padding:30px;
+}

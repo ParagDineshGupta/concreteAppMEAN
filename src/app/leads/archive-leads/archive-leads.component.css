@@ -8,11 +8,11 @@ ul.breadcrumb{
   background:#fff;
 }
 #archive-leads-panel{
-    border:2px solid #dd0330;
+    border:2px solid #fff;
   }
   #archive-leads-panel div{
-    background: #dd0330;;
-    color:#fff;
+    background: #fff;;
+    color:#3f3f3f;
     font-size:18px;
   }
 
@@ -24,7 +24,7 @@ ul.breadcrumb{
     vertical-align: top;
   }
   #archive-leads-panel table tbody tr td span{
-    font-size:25px;
+    font-size:14px;
   }
   #archive-leads-panel table tbody tr td span.text-warning{
     font-size:18px;
