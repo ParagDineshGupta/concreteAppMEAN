@@ -16,6 +16,7 @@ var dashboard = require('./routes/dashboard');
 var leads = require('./routes/leads');
 var custom = require('./routes/custom');
 var autoemail = require('./routes/autoemail');
+var gmail = require('./routes/gmail');
 
 var app = express();
 // view engine setup

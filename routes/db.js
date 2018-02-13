@@ -73,7 +73,7 @@ module.exports.getMyLeads = function(id, count, callback){
 }
 
 module.exports.getSingleUserProfile = function(userid, callback){
-    var query = 'SELECT users.user_name, users.user_email, users.user_mobile, users.user_profile_pic, users.user_designation, users.user_add_date FROM users WHERE users.user_id = ' + connection.escape(userid);
+    var query = 'SELECT users.user_name, users.user_email,users.user_gmail_auth_token_present, users.user_mobile, users.user_profile_pic, users.user_designation, users.user_add_date FROM users WHERE users.user_id = ' + connection.escape(userid);
     //console.log(query);
     connection.query(query, callback);
 }

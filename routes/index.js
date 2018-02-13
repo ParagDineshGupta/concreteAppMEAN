@@ -10,6 +10,7 @@ var secret = 'thisisabigsecret';
 var multer = require('multer');
 var upload = multer({dest:'./dist/uploads/'});
 var fs = require('fs');
+var gmail = require('./gmail');
 
 
 /* GET home page. */
@@ -219,7 +220,10 @@ router.get('/profile', function(req, res){
 			var d = new Date(results[0].user_add_date);
 			var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
     			d.getFullYear();
-    		results[0].user_add_date = datestring;
+			results[0].user_add_date = datestring;
+			if(!results[0].user_gmail_auth_token_present){
+				results.gmailAuthLink = gmail.getAuthUrl();
+			}
     		//results[0].user_profile_pic = 'http://localhost:3000/dist/uploads/' + results[0].user_profile_pic;
 			res.json({
 				success:true,

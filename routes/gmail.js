@@ -1,13 +1,16 @@
 const express = require('express');
-const google = require('googleapis');
-const googleAuth = require('google-auth-library');
+var google = require('googleapis');
+var googleAuth = require('google-auth-library');
 const fs = require('fs');
 var async = require('async');
+var db = require('./db');
+var gmail = google.gmail('v1');
+
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 var oauth2Client = null;
 
-fs.readFile('./client_secret.json', function(err, content){
+fs.readFile(__dirname + '/client_secret.json', function(err, content){
 	if(err){
 		console.log("error loading client secret file" + err);
 		return;
@@ -30,7 +33,6 @@ fs.readFile('./client_secret.json', function(err, content){
 		token_type: token_type,
 		expiry_date: expiry_date
 	}
-
 	getThreadIds(["aditi@engineerbabu.com"]);
 });
 
@@ -64,7 +66,6 @@ function getToken(code){
 	})
 }
 
-var gmail = google.gmail('v1');
 
 
 function getThreadIds(clientEmails){
@@ -108,6 +109,7 @@ function getThreadIds(clientEmails){
 
 
 function getThreadsForAQuery(query, callback){
+	
 	gmail.users.threads.list({
 		auth:oauth2Client,
 		userId:'me'
@@ -144,7 +146,6 @@ function getMessagesInThreadId(id){
 		// 	console.log(str);
 		// 	console.log('............................................');
 		// } )
-		
 		console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
 	});
 }
@@ -159,4 +160,8 @@ function storeEmail(email){
 		console.log(results);
 		return results;
 	});
+}
+
+module.exports = {
+	getAuthUrl: getAuthUrl
 }

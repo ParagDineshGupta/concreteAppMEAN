@@ -15,6 +15,9 @@ export class UserComponent implements OnInit {
 
   userDetails:any = Object;
   fileToUpload:any = [];
+  displayInputForAuthCode:Boolean = false;
+  isGmailAuthenticated:Boolean = false;
+  gmailAuthLink:any = "";
   constructor(private userProfileService: UserprofileService, private cookieService: CookieService, private router: Router) { }
 
   ngOnInit() {
@@ -38,13 +41,31 @@ export class UserComponent implements OnInit {
       .subscribe((results:any) => {
         if(results.success){
           this.userDetails = results.data[0];
-          //console.log(this.userDetails);
+          if(this.userDetails.user_gmail_auth_token_present){
+            this.isGmailAuthenticated = true;
+            document.getElementById('getEmailModal').style.display = "none";
+          }else{
+            this.gmailAuthLink = results.data.gmailAuthLink;
+            document.getElementById('getEmailModal').style.display = "block";
+          }
+          console.log(results);
+          console.log(this.gmailAuthLink);
         }else{
           //console.log("error receiving user profile details");
           //console.log(results);
         }
       })
   }
+
+  changeAuthCodeInputDisplay(){
+    if(this.displayInputForAuthCode){
+      this.displayInputForAuthCode = false;
+    }else{
+      this.displayInputForAuthCode = true;
+    }
+  }
+
+
 
   addFileToUpload(event:any){
     this.fileToUpload = event.target.files[0];
@@ -103,4 +124,6 @@ export class UserComponent implements OnInit {
         console.log(err);
       })
   }
+
+  
 }
