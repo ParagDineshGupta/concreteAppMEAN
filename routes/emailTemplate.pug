@@ -1,0 +1,57 @@
+html(lang="en")
+  head
+    style(type="text/css").
+      .headingOfSections{
+        color:#3f3f3f;
+      }
+  body
+    h2 Today's Updates from #{lDate} to #{curDate}
+    br
+    br
+    h3.headingOfSections New Leads in Last 24 hours
+    each nlead in newLeads
+      h4  #{nlead.project_name}
+      h6 #{nlead.notification_title}
+      b
+        p #{nlead.notification_description}
+      p on #{nlead.notification_add_dt} by #{nlead.user_name}
+    br
+    br
+    br
+    h3 Update Leads in Last 24 hours
+    each nlead in updateLeads
+      h4  #{nlead.project_name}
+      h6 #{nlead.notification_title}
+      b
+        p #{nlead.notification_description}
+      p on #{nlead.notification_add_dt} by #{nlead.user_name}
+    br
+    br
+    br
+    h3 Update Amount in Last 24 hours
+    each nlead in updateAmount
+      h4  #{nlead.project_name}
+      h6 #{nlead.notification_title}
+      b
+        p #{nlead.notification_description}
+      p on #{nlead.notification_add_dt} by #{nlead.user_name}
+    br
+    br
+    br
+    h3 Update Call Logs in Last 24 hours
+    each nlead in updateProgress
+      h4  #{nlead.project_name}
+      h6 #{nlead.notification_title}
+      b
+        p #{nlead.notification_description}
+      p on #{nlead.notification_add_dt} by #{nlead.user_name}
+    br
+    br
+    br
+    h3 Other activities in Last 24 hours
+    each nlead in others
+      h4  #{nlead.project_name}
+      h6 #{nlead.notification_title}
+      b
+        p #{nlead.notification_description}
+      p on #{nlead.notification_add_dt} by #{nlead.user_name}

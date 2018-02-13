@@ -45,7 +45,7 @@ module.exports.changePassword = function(id, hash, callback){
 }
 module.exports.updateProfilePic = function(id, payload, callback){
     var query = 'UPDATE users SET ' +  connection.escape(payload) + ' WHERE user_id = ' + connection.escape(id);
-    console.log(query);
+    //console.log(query);
     connection.query(query, callback);
 }
 module.exports.updateUser = function(user, id,callback){
@@ -61,13 +61,13 @@ module.exports.getTodaysExpectedPayments = function(date, callback){
 }
 
 module.exports.getTodaysExpectedPaymentsByUserId = function(date, userId, callback){
-    var query = 'SELECT projects.project_id, projects.project_name, projects.project_payment_amount, projects.project_payment_recieved_date, projects.project_current_status, users.user_name, users.user_profile_pic, currency_unit.currency_unit_text FROM projects  LEFT JOIN users ON projects.project_manager_id = users.user_id LEFT JOIN currency_unit ON projects.project_budget_unit = currency_unit.currency_unit_id WHERE project_payment_recieved_date = ' + connection.escape(date) + 'AND projects.project_payment_status = 0 WHERE projects.project_manager_id = ' + connection.escape(userId) + ' ORDER BY projects.project_payment_recieved_date LIMIT 10';
+    var query = 'SELECT projects.project_id, projects.project_name, projects.project_payment_amount, projects.project_payment_recieved_date, projects.project_current_status, users.user_name, users.user_profile_pic, currency_unit.currency_unit_text FROM projects  LEFT JOIN users ON projects.project_manager_id = users.user_id LEFT JOIN currency_unit ON projects.project_budget_unit = currency_unit.currency_unit_id WHERE project_payment_recieved_date = ' + connection.escape(date) + 'AND projects.project_payment_status = 0  AND projects.project_manager_id = ' + connection.escape(userId) + ' ORDER BY projects.project_payment_recieved_date LIMIT 10';
     //console.log('querying database %%%%%%%%%%%%%%%%%%%%%%%%%%%%%' + query);
     connection.query(query, callback);
 }
 
-module.exports.getMyLeads = function(id, callback){
-    var query = 'SELECT projects.project_id, projects.project_name, projects.project_client_name, projects.project_client_email, projects.project_client_contact_no, projects.project_platforms, projects.project_manager_id, projects.project_current_status, projects.project_add_date, projects.project_estimate_budget, projects.project_budget_unit, projects.project_payment_amount, projects.project_payment_recieved_date, users.user_name, current_status.user_name AS current_status_by, project_status.project_status_name, project_status.project_status_class_name, currency_unit.currency_unit_text FROM projects LEFT JOIN users ON projects.project_manager_id = users.user_id LEFT JOIN users current_status ON current_status.user_id = projects.project_current_status_by  LEFT JOIN project_status ON project_status.project_status_id = projects.project_current_status LEFT JOIN currency_unit ON projects.project_budget_unit = currency_unit.currency_unit_id WHERE projects.project_manager_id = ' + connection.escape(id) +' ORDER BY projects.project_id DESC LIMIT 10';
+module.exports.getMyLeads = function(id, count, callback){
+    var query = 'SELECT projects.project_id, projects.project_name, projects.project_client_name, projects.project_client_email, projects.project_client_contact_no, projects.project_platforms, projects.project_manager_id, projects.project_current_status, projects.project_add_date, projects.project_estimate_budget, projects.project_budget_unit, projects.project_payment_amount, projects.project_payment_recieved_date, users.user_name, current_status.user_name AS current_status_by, project_status.project_status_name, project_status.project_status_class_name, currency_unit.currency_unit_text FROM projects LEFT JOIN users ON projects.project_manager_id = users.user_id LEFT JOIN users current_status ON current_status.user_id = projects.project_current_status_by  LEFT JOIN project_status ON project_status.project_status_id = projects.project_current_status LEFT JOIN currency_unit ON projects.project_budget_unit = currency_unit.currency_unit_id WHERE projects.project_manager_id = ' + connection.escape(id) +' ORDER BY projects.project_id DESC LIMIT  ' + count + ', 10';
     //console.log(query);
     connection.query(query, callback);
 }
@@ -79,8 +79,8 @@ module.exports.getSingleUserProfile = function(userid, callback){
 }
 
 //this gets the leads that the current user isn't associated with.
-module.exports.getAllLeadsForDashboard = function(id, callback){
-    var query = 'SELECT projects.project_id, projects.project_name, projects.project_client_name, projects.project_client_email, projects.project_client_contact_no, projects.project_platforms, projects.project_manager_id, projects.project_current_status, projects.project_add_date, projects.project_estimate_budget, projects.project_budget_unit, projects.project_payment_amount, projects.project_payment_recieved_date, users.user_name, current_status.user_name AS current_status_by, project_status.project_status_name, project_status.project_status_class_name, currency_unit.currency_unit_text FROM projects LEFT JOIN users ON projects.project_manager_id = users.user_id LEFT JOIN users current_status ON current_status.user_id = projects.project_current_status_by  LEFT JOIN project_status ON project_status.project_status_id = projects.project_current_status LEFT JOIN currency_unit ON projects.project_budget_unit = currency_unit.currency_unit_id WHERE projects.project_manager_id != ' + connection.escape(id) +' ORDER BY projects.project_id DESC LIMIT 10';
+module.exports.getAllLeadsForDashboard = function(id, count, callback){
+    var query = 'SELECT projects.project_id, projects.project_name, projects.project_client_name, projects.project_client_email, projects.project_client_contact_no, projects.project_platforms, projects.project_manager_id, projects.project_current_status, projects.project_add_date, projects.project_estimate_budget, projects.project_budget_unit, projects.project_payment_amount, projects.project_payment_recieved_date, users.user_name, current_status.user_name AS current_status_by, project_status.project_status_name, project_status.project_status_class_name, currency_unit.currency_unit_text FROM projects LEFT JOIN users ON projects.project_manager_id = users.user_id LEFT JOIN users current_status ON current_status.user_id = projects.project_current_status_by  LEFT JOIN project_status ON project_status.project_status_id = projects.project_current_status LEFT JOIN currency_unit ON projects.project_budget_unit = currency_unit.currency_unit_id WHERE projects.project_manager_id != ' + connection.escape(id) +' ORDER BY projects.project_id DESC LIMIT ' + count + ', 10';
     //console.log(query);
     connection.query(query, callback);
 }
@@ -114,15 +114,15 @@ module.exports.getThisWeeksExpectedPaymentsById = function(ldate, udate, userId,
 }
 
 //this will fetch all the leads irrespective of the user
-module.exports.getAllLeads = function(callback){
-    var query = 'SELECT projects.project_id, projects.project_name, projects.project_client_name, projects.project_client_email, projects.project_client_contact_no, projects.project_platforms, projects.project_manager_id, projects.project_current_status, projects.project_add_date, projects.project_estimate_budget, projects.project_budget_unit, projects.project_payment_amount, projects.project_payment_recieved_date, users.user_name, project_status.project_status_name, project_status.project_status_class_name, currency_unit.currency_unit_text FROM projects LEFT JOIN users ON users.user_id=projects.project_manager_id LEFT JOIN project_status ON project_status.project_status_id=projects.project_current_status LEFT JOIN currency_unit ON projects.project_budget_unit=currency_unit.currency_unit_id where project_current_status NOT IN (6,7) order by projects.project_id desc';
+module.exports.getAllLeads = function(count, callback){
+    var query = 'SELECT projects.project_id, projects.project_name, projects.project_client_name, projects.project_client_email, projects.project_client_contact_no, projects.project_platforms, projects.project_manager_id, projects.project_current_status, projects.project_add_date, projects.project_estimate_budget, projects.project_budget_unit, projects.project_payment_amount, projects.project_payment_recieved_date, users.user_name, project_status.project_status_name, project_status.project_status_class_name, currency_unit.currency_unit_text FROM projects LEFT JOIN users ON users.user_id=projects.project_manager_id LEFT JOIN project_status ON project_status.project_status_id=projects.project_current_status LEFT JOIN currency_unit ON projects.project_budget_unit=currency_unit.currency_unit_id where project_current_status NOT IN (6,7) order by projects.project_id DESC LIMIT ' + connection.escape(count) + ', 10';
 
     //console.log(query);
     connection.query(query, callback);
 }
 
-module.exports.getArchiveLeads = function(callback){
-    var query = "SELECT projects.project_id, projects.project_name, projects.project_client_name, projects.project_client_email, projects.project_client_contact_no, projects.project_platforms, projects.project_manager_id, projects.project_current_status, projects.project_add_date, projects.project_estimate_budget, projects.project_budget_unit, projects.project_payment_amount, projects.project_payment_recieved_date, users.user_name, project_status.project_status_name, project_status.project_status_class_name, currency_unit.currency_unit_text FROM projects LEFT JOIN users ON users.user_id=projects.project_manager_id LEFT JOIN project_status ON project_status.project_status_id=projects.project_current_status LEFT JOIN currency_unit ON projects.project_budget_unit=currency_unit.currency_unit_id where project_current_status IN (6,7) order by projects.project_id DESC LIMIT 10";
+module.exports.getArchiveLeads = function(count, callback){
+    var query = "SELECT projects.project_id, projects.project_name, projects.project_client_name, projects.project_client_email, projects.project_client_contact_no, projects.project_platforms, projects.project_manager_id, projects.project_current_status, projects.project_add_date, projects.project_estimate_budget, projects.project_budget_unit, projects.project_payment_amount, projects.project_payment_recieved_date, users.user_name, project_status.project_status_name, project_status.project_status_class_name, currency_unit.currency_unit_text FROM projects LEFT JOIN users ON users.user_id=projects.project_manager_id LEFT JOIN project_status ON project_status.project_status_id=projects.project_current_status LEFT JOIN currency_unit ON projects.project_budget_unit=currency_unit.currency_unit_id where project_current_status IN (6,7) order by projects.project_id DESC LIMIT " + connection.escape(count) + ", 10";
     connection.query(query, callback);
 }
 
@@ -223,5 +223,16 @@ module.exports.deleteCallLog = function(id, callback){
 module.exports.updateCallLog = function(id, update, callback){
     var query = 'UPDATE project_call_log SET ' + connection.escape(update) + ' WHERE project_call_log_id = ' + connection.escape(id);
     //console.log(query);
+    connection.query(query, callback);
+}
+
+module.exports.getMailsForSendingDailyUpdates = function(callback){
+    var query = 'SELECT user_email, user_name FROM users WHERE user_status = 1';
+    connection.query(query, callback);
+}
+
+module.exports.getNotificationsForDailyMail = function(lDate, callback){
+    var query = 'SELECT notifications.sub_category, notifications.notification_title, notifications.notification_description, notification_add_dt, projects.project_name, users.user_name FROM notifications LEFT JOIN users ON users.user_id = notifications.user_id LEFT JOIN projects ON projects.project_id = notifications.category_id WHERE notifications.notification_add_dt >= ' + connection.escape(lDate) + ' ORDER BY notifications.sub_category DESC, notifications.notification_add_dt;'
+    console.log(query);
     connection.query(query, callback);
 }

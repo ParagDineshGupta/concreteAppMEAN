@@ -6,7 +6,7 @@ var secret = 'thisisabigsecret';
 
 //this will give  the leads of current logged in user
 //replace the id '4' with user id from session
-router.get('/myleads', function(req, res){
+router.post('/myleads', function(req, res){
 	//console.log('**************************************');
 	//console.log(req.headers.authorization);
 	jwt.verify(req.headers.authorization, secret, function(err, decoded){
@@ -18,10 +18,11 @@ router.get('/myleads', function(req, res){
 			return;
 		}
 		var userId =  decoded.userId;
-
+		
 		//console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + JSON.stringify(userId));
-	    db.getMyLeads(userId, function(err, results){
-	    	console.log(results);
+	    db.getMyLeads(userId, req.body.count, function(err, results){
+			//console.log(results);
+			//console.log(err);
 	        if(err){
 				//console.log(err);
 				return res.json({
@@ -54,20 +55,30 @@ router.get('/getallplatforms', function(req, res){
 })
 
 //this will list the latest 10  leads not from the current logged in user
-router.get('/allleads', function(req, res){
-    db.getAllLeadsForDashboard(4, function(err, results){
-        if(err){
-			//console.log(err);
-			return res.json({
-				success:false,
-				msg:"there was some err"
-			})
+router.post('/allleads', function(req, res){
+	jwt.verify(req.headers.authorization, secret, function(err, decoded){
+		if(err){
+			//console.log("%%%%%%%%%%%%%%%%%%%" + err);
+			res.json({
+				msg:"some error occured"
+			});
+			return;
 		}
-		return res.json({
-			success:true, 
-			data: results
+		var userId =  decoded.userId;
+		db.getAllLeadsForDashboard(userId,  req.body.count, function(err, results){
+			if(err){
+				//console.log(err);
+				return res.json({
+					success:false,
+					msg:"there was some err"
+				})
+			}
+			return res.json({
+				success:true, 
+				data: results
+			});
 		});
-    })
+	});
 });
 
 

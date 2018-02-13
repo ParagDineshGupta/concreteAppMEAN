@@ -14,8 +14,8 @@ export class BaseService {
     let headers = {
       headers : new HttpHeaders().set('Authorization',  token)
     }
-    //url = 'https://leads.engineerbabu.com/' + url;
-    url = 'http://localhost:3000/' + url;
+    //url = 'https://leads.engineerbabu.com/api/' + url;
+    url = 'http://localhost:3000/api/' + url;
     return this.http.get(url, headers);
   }
 
@@ -24,8 +24,8 @@ export class BaseService {
     let headers = {
       headers : new HttpHeaders().set('Authorization',  token)
     }
-    //url = 'https://leads.engineerbabu.com/' + url;
-    url = "http://localhost:3000/" + url;
+    //url = 'https://leads.engineerbabu.com/api/' + url;
+    url = "http://localhost:3000/api/" + url;
     return this.http.post(url, data, headers);
   }
 

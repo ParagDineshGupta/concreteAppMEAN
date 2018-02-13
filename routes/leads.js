@@ -7,8 +7,8 @@ var secret = 'thisisabigsecret';
 
 
 //this route will return all the leads
-router.get('/', function(req, res){
-    db.getAllLeads(function(err, results){
+router.post('/', function(req, res){
+    db.getAllLeads(req.body.count, function(err, results){
         if(err){
 			//console.log(err);
 			return res.json({
@@ -29,8 +29,9 @@ router.get('/', function(req, res){
     });
 });
 
-router.get('/archiveleads', function(req, res){
-	db.getArchiveLeads(function(err, results){
+router.post('/archiveleads', function(req, res){
+	
+	db.getArchiveLeads(req.body.count, function(err, results){
 		if(err){
 			//console.log(err);
 			return res.json({
@@ -386,8 +387,8 @@ router.post('/updatepaymentdate', function(req, res){
 				category:'Leads',
 				sub_category : 'update_amount',
 				category_id: projectId,
-				notification_title : "Update "+ amountStatus + " amount to " + currencyUnit +  project_payment_amount ,
-				notification_description : "",
+				notification_title : "Update "+ amountStatus + " amount " + currencyUnit +  project_payment_amount ,
+				notification_description : "Update "+ amountStatus + " amount " + currencyUnit +  project_payment_amount,
 				user_id: userId,
 				notification_add_dt: getFormattedDate(),
 				notification_status:0,

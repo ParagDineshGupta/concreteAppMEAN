@@ -15,9 +15,9 @@ var users = require('./routes/users');
 var dashboard = require('./routes/dashboard');
 var leads = require('./routes/leads');
 var custom = require('./routes/custom');
+var autoemail = require('./routes/autoemail');
 
 var app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -50,11 +50,12 @@ app.use(expressValidator({
 }));
 
 
-app.use('/index', index);
-app.use('/users', users);
-app.use('/dashboard', dashboard);
-app.use('/leads', leads);
-app.use('/custom', custom);
+app.use('/api/index', index);
+app.use('/api/users', users);
+app.use('/api/dashboard', dashboard);
+app.use('/api/leads', leads);
+app.use('/api/custom', custom);
+app.use('/api/autoemail', autoemail);
 app.use('/', function(req, res){
 	res.sendFile(path.join(__dirname, 'dist/index.html'));	
 });
@@ -75,7 +76,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  console.log(error);
+  res.json(error);
 });
 
 module.exports = app;
