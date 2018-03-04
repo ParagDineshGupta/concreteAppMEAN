@@ -1,0 +1,224 @@
+<div class="wrapper">
+	<div class="sidebar" data-background-color="white" data-active-color="danger">
+		<sidebar-cmp></sidebar-cmp>
+	</div>
+	<div class="main-panel">
+		<navbar-cmp></navbar-cmp>
+		<div class="content">
+			<div class="container-fluid">
+					<div class="col-md-12 col-sm-12">
+						<div class="well well-sm">
+							<ul class="breadcrumb">
+								<li><a routerLink="/dashboard">Home</a></li>
+								<li><a routerLink="/leads">Leads</a></li>
+								<li><a routerLink="/allleads">Purchase Order</a></li>
+								<li>Orders</li>
+							</ul>
+							
+						</div>
+						<div class="panel panel-danger" id="archive-leads-panel">
+							<div class="panel-body" ><span class="fa fa-paper-plane"></span> Pending Orders </div>
+							<div class="orders">
+								<!-- div class=" orderBlock" *ngFor="let quote of uOrders">
+									<h4><span class="fa fa-truck"></span> {{quote.quantity}} cubic meter of {{quote.quality}} Grade Concrete</h4>
+									<table class="table table-hover">
+										<tbody>
+											<tr><p><b>location: </b> {{quote.customerSite}}</p></tr>
+											<tr><p><b>Generation Date : </b> {{quote.generationDate}}</p></tr>
+											<tr><p><b>Customer Name: </b> {{quote.requestedBy}}</p></tr>
+											<tr><p><b>Company Name: </b> {{quote.companyName}}</p></tr>
+											<tr><p><b>Required By: </b> {{quote.requiredByDate}}</p></tr>
+											<button class="btn btn-primary " type="button" (click)="onPlaceOrder(quote._id)">Place order</button>
+										</tbody>  
+									</table>
+								</div> -->
+								<table class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>Customer Details</th>
+													<th>Quality & Quantity</th>
+													<th>Generation Date</th>
+													<th>Delivery Date</th>
+													<th>Status</th>
+													<th>Status Date</th>
+													<th>Approve Order</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let order of uOrders">
+													<td>
+														<p>{{order.requestedBy}}</p>
+														<p>{{order.companyName}}</p>
+													</td>
+													<td>
+														<p>{{order.quality}} </p>
+														<p>{{order.quantity}}</p>
+													</td>
+													<td>
+														<p>{{order.generationDate}} </p>
+													</td>
+													<td>
+														<p>{{order.requiredByDate}} </p>
+													</td>
+													<td>
+														<p>{{order.status}}</p>
+													</td>
+													<td>
+														<p>{{order.statusDate}}	</p>
+													</td>
+													<td>
+														<button class="btn btn-primary " type="button" (click)="onPlaceOrder(order._id)">Confirm order</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+							   
+								
+								<div class="panel panel-danger" id="archive-leads-panel">
+										<div class="panel-body" ><span class="fa fa-paper-plane"></span>Orders Confirmed </div>		
+								          <!-- <div class=" orderBlock" *ngFor="let quote of aOrders">
+											  <div *ngIf="quote.status == 'approved'">
+													<h4><span class="fa fa-truck"></span> {{quote.quantity}} cubic meter of {{quote.quality}} Grade Concrete</h4>
+													<table class="table table-hover">
+													   <tbody>
+														  <tr><p><b>location: </b> {{quote.customerSite}}</p></tr>
+														  <tr><p><b>Generation Date : </b> {{quote.generationDate}}</p></tr>
+														  <tr><p><b>Customer Name: </b> {{quote.requestedBy}}</p></tr>
+														  <tr><p><b>Company Name: </b> {{quote.companyName}}</p></tr>
+														  <tr><p><b>Required By: </b> {{quote.requiredByDate}}</p></tr>
+														  
+													   </tbody>  
+												   </table>
+											  </div>
+										    
+										</div> -->
+										<table class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>Customer Details</th>
+													<th>Quality & Quantity</th>
+													<th>Delivery Date</th>
+													<th>Status</th>
+													<th>Status Date</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let order of aOrders">
+													<td>
+														<p>{{order.requestedBy}}</p>
+														<p>{{order.companyName}}</p>
+													</td>
+													<td>
+														<p>{{order.quality}} </p>
+														<p>{{order.quantity}}</p>
+													</td>
+													<td>
+														<p>{{order.requiredByDate}} </p>
+													</td>
+													<td>
+														<p>{{order.status}}</p>
+													</td>
+													<td>
+														<p>{{order.statusDate}}	</p>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+								</div>
+								<div class="panel panel-danger" id="archive-leads-panel">
+										<div class="panel-body" ><span class="fa fa-paper-plane"></span>Cancelled Orders </div>		
+								          <!-- <div class=" orderBlock" *ngFor="let quote of aOrders">
+											  <div *ngIf="quote.status == 'approved'">
+													<h4><span class="fa fa-truck"></span> {{quote.quantity}} cubic meter of {{quote.quality}} Grade Concrete</h4>
+													<table class="table table-hover">
+													   <tbody>
+														  <tr><p><b>location: </b> {{quote.customerSite}}</p></tr>
+														  <tr><p><b>Generation Date : </b> {{quote.generationDate}}</p></tr>
+														  <tr><p><b>Customer Name: </b> {{quote.requestedBy}}</p></tr>
+														  <tr><p><b>Company Name: </b> {{quote.companyName}}</p></tr>
+														  <tr><p><b>Required By: </b> {{quote.requiredByDate}}</p></tr>
+														  
+													   </tbody>  
+												   </table>
+											  </div>
+										    
+										</div> -->
+										<table class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>Customer Details</th>
+													<th>Quality & Quantity</th>
+													<th>Delivery Date</th>
+													<th>Status</th>
+													<th>Status Date</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let order of cOrders">
+													<td>
+														<p>{{order.requestedBy}}</p>
+														<p>{{order.companyName}}</p>
+													</td>
+													<td>
+														<p>{{order.quality}} </p>
+														<p>{{order.quantity}}</p>
+													</td>
+													<td>
+														<p>{{order.requiredByDate}} </p>
+													</td>
+													<td>
+														<p>{{order.status}}</p>
+													</td>
+													<td>
+														<p>{{order.statusDate}}	</p>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+								</div>
+							</div>		
+
+						<!--	<table class="table table-responsive table-striped table-hover">
+								<thead>
+									<tr>
+										<th colspan="2">Project Name</th>
+										<th>Client</th>
+										<th>Payment</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let lead of archiveLeads">
+										<td colspan="2"> <a [routerLink] = "['/leads/details/', lead.project_id]">{{lead.project_name}} </a><br>
+											<span class="text-warning"><span class="fa fa-clock-o"></span>{{lead.project_add_date}}</span>
+											<br>
+											<span class="icon-success"><span class="fa fa-android"></span></span>
+										</td>
+										<td>   <b>{{lead.project_client_name}}</b>   <br>
+												<span class="text-primary"> <span class="fa fa-envelope"></span> {{lead.project_client_email}}</span> <br>
+											<span class="text-info"> <span class="fa fa-mobile-phone"></span> {{lead.project_client_contact_no}}</span>    
+										</td>
+										<td> 
+											Est-budget:<b><span *ngIf="lead.project_budget_unit == 1" class="fa fa-rupee"></span>
+												<span  *ngIf="lead.project_budget_unit == 2" class="fa fa-dollar"></span>{{lead.project_estimate_budget}}</b><br>
+											Upfront:<b><span *ngIf="lead.project_budget_unit == 1" class="fa fa-rupee"></span>
+												<span  *ngIf="lead.project_budget_unit == 2" class="fa fa-dollar"></span>{{lead.project_payment_amount}}</b><br>
+											<span class="fa fa-clock-o"></span>{{lead.project_payment_recieved_date}}
+										</td>
+										<td>
+											<span class="label .Custom_label {{lead.project_status_class_name}}">{{lead.project_status_name}}</span>
+											<p> <b>{{lead.user_name}}</b> </p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<a (click)="loadMoreArchiveLeads()" [ngClass]="(moreArchiveLeadsLeft) ? 'inactive-link' : '' " class="load-more-my-leads">
+								<span class="center">Load More</span> 
+							</a> -->
+						</div>
+					</div>    
+				</div>
+		</div>
+		<footer-cmp></footer-cmp>
+	</div>
+</div>

@@ -14,9 +14,6 @@ import { Router } from '@angular/router';
 export class UserComponent implements OnInit {
 
   userDetails:any = Object;
-  fileToUpload:any = [];
-  displayInputForAuthCode:Boolean = false;
-  isGmailAuthenticated:Boolean = false;
   gmailAuthLink:any = "";
   constructor(private userProfileService: UserprofileService, private cookieService: CookieService, private router: Router) { }
 
@@ -36,20 +33,15 @@ export class UserComponent implements OnInit {
     mobile:new FormControl()
   })
 
+
+
+
   getUserDetails(){
     this.userProfileService.getUserProfile()
       .subscribe((results:any) => {
+        console.log(results)
         if(results.success){
-          this.userDetails = results.data[0];
-          if(this.userDetails.user_gmail_auth_token_present){
-            this.isGmailAuthenticated = true;
-            document.getElementById('getEmailModal').style.display = "none";
-          }else{
-            this.gmailAuthLink = results.data.gmailAuthLink;
-            document.getElementById('getEmailModal').style.display = "block";
-          }
-          console.log(results);
-          console.log(this.gmailAuthLink);
+          this.userDetails = results.results;
         }else{
           //console.log("error receiving user profile details");
           //console.log(results);
@@ -57,29 +49,6 @@ export class UserComponent implements OnInit {
       })
   }
 
-  changeAuthCodeInputDisplay(){
-    if(this.displayInputForAuthCode){
-      this.displayInputForAuthCode = false;
-    }else{
-      this.displayInputForAuthCode = true;
-    }
-  }
-
-
-
-  addFileToUpload(event:any){
-    this.fileToUpload = event.target.files[0];
-    console.log(this.fileToUpload);
-  }
-  UploadFile(){
-    this.userProfileService.fileUploadOthers(this.fileToUpload)
-      .subscribe((results:any) => {
-        console.log("$$$$$$$$$$$$$$$$$$$$$" + results);
-        if(results.success){
-          console.log("file upload successful");
-        }
-      })
-  }
   logout(){
     this.cookieService.delete('User');
     this.router.navigate(['/login']);

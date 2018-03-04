@@ -1,40 +1,14 @@
 
 <div class="sidebar-wrapper">
-    <div class="logo">
+    <div >
         
-            <div class="logo-img">
-                <img src="../../../assets/img/EB_Lead-management.png" alt="">
+            <div class="top-logo-div">
+                <p class='main-logo-heading'> ConcreteApp </p>
             </div>
+            <span style="clear:both;"></span>
         
     </div>
     <ul class="nav">
-            <li *ngIf="isNotMobileMenu()">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="ti-panel"></i>
-					<p>Stats</p>
-                </a>
-            </li>
-            <li class="dropdown" *ngIf="isNotMobileMenu()">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="ti-bell"></i>
-                        <p class="notification">5</p>
-    					<p>Notifications</p>
-    					<b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Notification 1</a></li>
-                    <li><a href="#">Notification 2</a></li>
-                    <li><a href="#">Notification 3</a></li>
-                    <li><a href="#">Notification 4</a></li>
-                    <li><a href="#">Another notification</a></li>
-                  </ul>
-            </li>
-            <li *ngIf="isNotMobileMenu()">
-                <a href="#">
-					<i class="ti-settings"></i>
-					<p>Settings</p>
-                </a>
-            </li>
             <li class="divider" *ngIf="isNotMobileMenu()"></li>
         <li routerLinkActive="active">
             <a routerLink="/dashboard">
@@ -51,25 +25,13 @@
         <li routerLinkActive="active">
             <a routerLink="/leads">
                 <i class="fa fa-plus"></i>
-                <p>Leads</p>
-            </a>    
-        </li>
-        <li routerLinkActive="active">
-            <a routerLink="/allleads">
-                <i class="fa fa-list-alt"></i>
-                <p>All Leads</p>
+                <p>Purchase Orders</p>
             </a>    
         </li>
         <li routerLinkActive="active">
             <a routerLink="/archiveleads">
                 <i class="fa fa-archive"></i>
-                <p>Archive Leads</p>
-            </a>    
-        </li>
-        <li routerLinkActive="active">
-            <a routerLink="/allusers">
-                <i class="fa fa-users"></i>
-                <p>All Users</p>
+                <p> Orders</p>
             </a>    
         </li>
     </ul>

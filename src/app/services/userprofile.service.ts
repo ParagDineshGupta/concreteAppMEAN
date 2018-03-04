@@ -6,10 +6,11 @@ export class UserprofileService {
 
   
   private allUserProfileUrl = 'users/';
-  private userProfileUrl = 'index/profile'
-  private updatePasswordUrl = 'index/changepass';
-  private fileUploadUrl = 'index/changeprofilepic'
-  private updateProfileUrl = 'index/updateprofile';
+  private userProfileUrl = 'profile'
+  private updatePasswordUrl = 'changepass';
+  private fileUploadUrl = 'changeprofilepic'
+  private updateProfileUrl = 'updateprofile';
+  private authCode = 'authcode'
 
   constructor(private http: BaseService ) { }
 
@@ -18,6 +19,9 @@ export class UserprofileService {
   }
   getUserProfile(){
     return this.http.get(this.userProfileUrl);
+  }
+  submitAuthCode(payload:any){
+    return this.http.post(this.authCode, payload);
   }
   updateUserPassword(payload:any){
     return this.http.post(this.updatePasswordUrl, payload);

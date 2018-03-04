@@ -23,25 +23,27 @@
 }
 .top-buttons{
     width:100%;
+    margin:0px;
+    padding:0px;
     background: #3f3f3f;
 }
 .top-buttons a{
-    width:100%;
+    width:49%;
     font-size:28px;
-    color:#fff;
     text-align: center;
     display: inline-block;
     padding:20px;
     cursor:pointer;
 }
-.top-buttons a:hover, .top-buttons a.active{
+.top-buttons a:hover, .top-buttons{
     color:#3ead98;
 }
 button span.fa{
     color:#3f3f3f;
 }
-.top-buttons a:nth-child(1){
-    border:5px solid #5d5d5d;
+a.active{
+    color:#3ead98;
+    background:#fff;
 }
 .login-form, .signup-form{
     padding:30px;

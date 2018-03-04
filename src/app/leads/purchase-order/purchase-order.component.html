@@ -11,14 +11,54 @@
 						<ul class="breadcrumb">
 							<li><a routerLink="/dashboard">Home</a></li>
 							<li><a routerLink="/leads">Leads</a></li>
-							<li>All Leads</li>
+							<li><a routerLink="/allLeads"></a>Purchase Order</li>
 							<li><a routerLink="/archiveleads">Archive Leads</a></li>
 						</ul>																								
 						
 					</div>
 					<div class="panel panel-danger" id="all-leads-panel">
-						<div class="panel-body" ><span class="fa fa-paper-plane"></span>  All Leads</div>
-						<table class="table table-responsive table-striped table-hover">
+						<div class="panel-body" ><span class="fa fa-paper-plane"></span>Pending Purchase Order</div>
+						<div class="orders">
+								<div class=" orderBlock" *ngFor="let quote of uQuotes">
+									<h4><span class="fa fa-truck"></span> {{quote.quantity}} cubic meter of {{quote.quality}} Grade Concrete</h4>
+									<table class="table">
+										<tbody>
+											<tr><p><b>location: </b> {{quote.customerSite}}</p></tr>
+											<tr><p><b>Generation Date : </b> {{quote.generationDate}}</p></tr>
+											<tr><p><b>Customer Name: </b> {{quote.requestedBy}}</p></tr>
+											<tr><p><b>Company Name: </b> {{quote.companyName}}</p></tr>
+											<tr><p><b>Price : </b> {{quote.price}}</p></tr>
+											<tr><p><b>Valid Till Date: </b> {{quote.validTill}}</p></tr>
+											<tr><button class="btn btn-success" type="button" (click)="onConfirm(quote._id)"> Purchase </button></tr>
+										</tbody>
+									</table>	
+								</div>
+						</div>
+					</div>
+
+					<div class="panel panel-danger" id="all-leads-panel">
+						<div class="panel-body" ><span class="fa fa-paper-plane"></span> Confirmed Purchase Order</div>
+						<div class="orders">
+								<div class=" orderBlock" *ngFor="let quote of aQuotes">
+									<h4><span class="fa fa-truck"></span> {{quote.quantity}} cubic meter of {{quote.quality}} Grade Concrete</h4>
+									<table class="table ">
+										<tbody>
+											<tr><p><b>location: </b> {{quote.customerSite}}</p></tr>
+											<tr><p><b>Generation Date : </b> {{quote.generationDate}}</p></tr>
+											<tr><p><b>Customer Name: </b> {{quote.requestedBy}}</p></tr>
+											<tr><p><b>Company Name: </b> {{quote.companyName}}</p></tr>
+											<tr><p><b>Price : </b> {{quote.price}}</p></tr>
+											<tr><p><b>Valid Till Date: </b> {{quote.validTill}}</p></tr>
+										</tbody>
+									</table>	
+								</div>
+						</div>
+					</div>
+
+
+
+
+					<!--	<table class="table table-responsive table-striped table-hover">
 							<thead>
 								<tr>
 									<th colspan="2">Project Name</th>
@@ -52,7 +92,7 @@
 										<p> <b>{{lead.user_name}}</b> </p>
 									</td>
 								</tr>
-								<!-- <tr>
+								 <tr>
 									<td colspan="2">Web and App development <br>
 										<span class="text-warning"><span class="fa fa-clock-o"></span>Jan 18, 2018</span>
 										<br>
@@ -201,13 +241,13 @@
 										<span class="label label-warning">Development Ongoing</span>
 										<p> <b>Kartika Mishra</b> </p>
 									</td>
-								</tr> -->
+								</tr> 
 							</tbody>
 						</table>
 						<a (click)="loadMoreAllLeads()" [ngClass]="(moreLeadsLeft) ? 'inactive-link' : '' " class="load-more-my-leads">
                             <span class="center">Load More</span> 
-                        </a>
-					</div>
+                        </a> -->
+					
 				</div>    
 			</div>
 		</div>

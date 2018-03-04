@@ -12,10 +12,10 @@ export class BaseService {
   get(url){
     let token = this.cookieService.get('User');
     let headers = {
-      headers : new HttpHeaders().set('Authorization',  token)
+      headers : new HttpHeaders().set('authorization',  token)
     }
     //url = 'https://leads.engineerbabu.com/api/' + url;
-    url = 'http://localhost:3000/api/' + url;
+    url = 'http://18.222.10.104/api/users/' + url;
     return this.http.get(url, headers);
   }
 
@@ -25,7 +25,7 @@ export class BaseService {
       headers : new HttpHeaders().set('Authorization',  token)
     }
     //url = 'https://leads.engineerbabu.com/api/' + url;
-    url = "http://localhost:3000/api/" + url;
+    url = "http://18.222.10.104/api/users/" + url;
     return this.http.post(url, data, headers);
   }
 

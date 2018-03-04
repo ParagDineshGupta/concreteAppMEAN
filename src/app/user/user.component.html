@@ -118,48 +118,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8 col-sm-12">
-                        <div class="card">
-                            <div class="header">
-                                <h5 class="title">Update Profile Picture</h5>
-                            </div>
-                            <div class="content">
-                                <form>
-                                    <label for="">Profile Picture</label>
-                                    <input type="file" (change)="addFileToUpload($event)" class="form-control border-input" placeholder="Add Profile Picture">
-                                </form>
-                            </div>
-                            <div class="submit-btn">
-                                <button class="btn btn-success" type="button" (click)="UploadFile()">Submit</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>                
         </div>
         <footer-cmp></footer-cmp>
     </div>
 </div>    
-    
-<div class="modal fade" *ngIf="!isGmailAuthenticated" id="getEmailModal" role="dialog">
-    <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h5 class="modal-title">Please click on following, and get all your mails in the gmail inbox instantly!!! <br>
-                Enter the code you get from the next tab in the input box below.</h5>
-        </div>
-        <div class="modal-body">
-            <button type="button"><a href="{{gmailAuthUrl}}"></a></button>
-            <form *ngIf="displayInputForAuthCode" [formGroup]="leadForm">
-                    <input type="text" class="form-control border-input" formControlName="authcode">
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" (click)="createNewLead()" data-dismiss="modal">Create Lead</button>
-        </div>
-    </div>
-    
-    </div>
-</div>

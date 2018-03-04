@@ -17,13 +17,9 @@ import { UserComponent } from './user/user.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { LeadsComponent } from './leads/leads.component';
 import { AddLeadsComponent } from './leads/add-leads/add-leads.component';
-import { AllLeadsComponent } from './leads/all-leads/all-leads.component';
-import { ArchiveLeadsComponent } from './leads/archive-leads/archive-leads.component';
-import { InvoiceComponent } from './invoice/invoice.component';
-import { AddInvoiceComponent } from './invoice/add-invoice/add-invoice.component';
-import { AllInvoiceComponent } from './invoice/all-invoice/all-invoice.component';
+import { PurchaseOrderComponent } from './leads/purchase-order/purchase-order.component';
+import { OrdersComponent } from './leads/orders/orders.component';
 import { AllUsersComponent } from './all-users/all-users.component';
-import { DetailsComponent } from './leads/details/details.component';
 import { LoginComponent } from './login/login.component';
 
 
@@ -34,14 +30,10 @@ import { LoginComponent } from './login/login.component';
     DashboardComponent,
     UserComponent,
     LeadsComponent,
+    PurchaseOrderComponent,
     AddLeadsComponent,
-    AllLeadsComponent,
-    ArchiveLeadsComponent,
-    InvoiceComponent,
-    AddInvoiceComponent,
-    AllInvoiceComponent,
+    OrdersComponent,
     AllUsersComponent,
-    DetailsComponent,
     LoginComponent
   ],
   imports: [

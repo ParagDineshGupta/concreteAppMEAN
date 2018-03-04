@@ -3256,7 +3256,9 @@
       height: 1px;
       margin: 10px 0;
     }
-  
+    
+    
+
     .nav-open .navbar-collapse {
       -webkit-transform: translate3d(0px, 0, 0);
       -moz-transform: translate3d(0px, 0, 0);
@@ -4445,4 +4447,16 @@
 .inactive-link{
   pointer-events: none;
   cursor: not-allowed;
+}
+.top-logo-div{
+  padding:25px 5px 5px 50px;
+  font-weight: 500;
+  margin:0px;
+  border-bottom: 1px solid #d3d3d3;
+}
+.main-logo-heading{
+  color:#3ead98!important;
+  font-size:24px!important;
+  font-weight:bolder!important;
+  display: block;
 }

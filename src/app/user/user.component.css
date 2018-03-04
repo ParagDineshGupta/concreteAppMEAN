@@ -4,3 +4,11 @@
 .submit-btn{
     padding:10px;
 }
+.emailAuthBlock{
+    background: #fff;
+    border-radius: 8px;
+    padding:5px;
+    margin:10px;
+    font-size:18px;
+    width:95%;
+}

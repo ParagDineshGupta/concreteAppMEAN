@@ -8,10 +8,11 @@
         <div class="col-md-8 col-md-offset-2">
           <div class="form-block">
             <div class="top-buttons">
-              <a class="active">Login</a>
+              <a (click)="displayLogin()" [ngClass]="{'active': isloginForm}" class="active">Login</a>
+              <a (click)="displaySignup()" [ngClass]="{'active': !isloginForm}" >SignUp</a>
             </div>
-            <div class="login-form">
-              <form action="/action_page.php" [formGroup]="loginform">
+            <div *ngIf="isloginForm" class="login-form">
+              <form [formGroup]="loginform">
                 <div class="form-group">
                   <label for="email">Email address:</label>
                   <input type="email" class="form-control border-input" id="email" formControlName="email">
@@ -21,6 +22,39 @@
                   <input type="password" class="form-control border-input" id="pwd" formControlName="pwd">
                 </div>
                 <button type="button" (click)="logInUser()" class="btn btn-default"><span class="fa fa-sign-in"></span> Login</button>
+              </form>
+            </div>
+            <div *ngIf="!isloginForm"  class="signup-form">
+              <form [formGroup]="signupform">
+                <div class="form-group">
+                  <label for="name">Full Name :</label>
+                  <input type="texy" class="form-control border-input" id="name" formControlName="name">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email address:</label>
+                  <input type="email" class="form-control border-input" id="email" formControlName="email">
+                </div>
+                <div class="form-group">
+                  <label for="contact">Contact No:</label>
+                  <input type="text" class="form-control border-input" id="contact" formControlName="contact">
+                </div>
+                <div class="form-group">
+                  <label for="pan">PAN number:</label>
+                  <input type="pan" class="form-control border-input" id="pan" formControlName="pan">
+                </div>
+                <div class="form-group">
+                  <label for="text">GST In:</label>
+                  <input type="text" class="form-control border-input" id="get" formControlName="gstin">
+                </div>
+                <div class="form-group">
+                  <label for="pwd">Password:</label>
+                  <input type="password" class="form-control border-input" id="pwd" formControlName="pwd">
+                </div>
+                <div class="form-group">
+                  <label for="password">Confirm Password:</label>
+                  <input type="password" class="form-control border-input" id="pwd2" formControlName="pwd2">
+                </div>
+                <button type="button" (click)="signupUser()" class="btn btn-default"><span class="fa fa-sign-in"></span> SignUp</button>
               </form>
             </div>
           </div>
