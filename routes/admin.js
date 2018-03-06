@@ -9,5 +9,30 @@ var async = require('async');
 var User = require('../models/User')
 
 router.get('/', (req, res) => {
+	User.getPendingProfilesForVerification((err, profiles) => {
+		console.log(profiles);
+		res.render('adminDashboard', {
+			profiles: profiles
+		})
+	})
+});
 
+
+router.get('/verifyuser/:id', function(req, res){
+	var id = req.params.id;
+	console.log(id);
+	User.findOneById(id, function(err, user){
+		if(err){
+			console.log(err);
+			res.status(500);
+		}
+		user.verified = true;
+		console.log(user);
+		user.save()
+		res.status(200);
+	});
 })
+
+
+
+module.exports = router;

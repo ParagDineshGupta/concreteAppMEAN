@@ -93,6 +93,7 @@ export class LoginComponent implements OnInit {
         console.log(results);
         if(results.success){
           this.showNotification('top','right', 'Your account has been created. Please wait atleast 24 hours before your account is verified by a Equipshare Admin. After that you can login and enjoy our services.')
+          this.displayLogin();
         }
       })
   }

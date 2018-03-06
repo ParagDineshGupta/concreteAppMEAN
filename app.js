@@ -16,6 +16,7 @@ var expressValidator = require('express-validator');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var admin = require('./routes/admin')
 
 var app = express();
 
@@ -42,6 +43,7 @@ app.use(passport.session());
 
 app.use('/api/', index);
 app.use('/api/users', users);
+app.use('/api/admin', admin)
 app.use('*', function(req, res){
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 })
@@ -78,7 +80,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  console.log(err);
+  res.send(err);
 });
 
 module.exports = app;

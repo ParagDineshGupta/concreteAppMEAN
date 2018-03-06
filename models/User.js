@@ -117,3 +117,7 @@ module.exports.addSite = function(customerSite, id,callback){
 module.exports.removeSite = function(userid, siteid, callback){
     User.findOneAndUpdate({_id:userid}, {$pull: {customerSite : {_id:siteid}}},callback);
 }
+
+module.exports.getPendingProfilesForVerification = function(callback){
+    User.find({verified: false, userType:'supplier'}, callback)
+}
