@@ -4,9 +4,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class LoginService {
   
-  private logInUrl = 'http://18.222.10.104/api/users/login';
+  private logInUrl = 'http://concrete.equipshare.in/api/users/login';
   //private logInUrl = 'https://leads.engineerbabu.com/api/index/login';
-  private signupUrl = 'http://18.222.10.104/api/users/signup'
+  private signupUrl = 'http://concrete.equipshare.in/api/users/signup'
   
   constructor(private http: HttpClient) { }
 

@@ -15,7 +15,7 @@ export class BaseService {
       headers : new HttpHeaders().set('authorization',  token)
     }
     //url = 'https://leads.engineerbabu.com/api/' + url;
-    url = 'http://18.222.10.104/api/users/' + url;
+    url = 'http://concrete.equipshare.in/api/users/' + url;
     return this.http.get(url, headers);
   }
 
@@ -25,7 +25,7 @@ export class BaseService {
       headers : new HttpHeaders().set('Authorization',  token)
     }
     //url = 'https://leads.engineerbabu.com/api/' + url;
-    url = "http://18.222.10.104/api/users/" + url;
+    url = "http://concrete.equipshare.in/api/users/" + url;
     return this.http.post(url, data, headers);
   }
 
