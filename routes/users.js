@@ -33,7 +33,7 @@ router.get('/', isAuthenticated, function(req, res, next){
 	console.log("about to call the function");
 	Quote.getAllQuotesForSupplier(function(err, quotes){
 		console.log("quotes returnded");
-		console.log(quotes);
+		//console.log(quotes);
 		if(err){
 			return res.json({
 				success:false,
@@ -43,16 +43,24 @@ router.get('/', isAuthenticated, function(req, res, next){
 		var aQuotes = [];//contain quotes that rmx supplier has already responded to
 		var uQuotes = [];//contain quotes that rmx supplier can respond to
 		quotes.forEach((quote) => {
-			console.log("repeating for : " + quote);
+			//console.log("repeating for : " + quote);
 			var flag = true;
+			var rmxResponse = false;
 			quote.responses.forEach((response) => {
+				//console.log(response.rmxId);
 				if(response.rmxId == userId){
-					aQuotes.push(quote);
 					flag = false;
+					rmxResponse = response;
+					console.log(response)
 				}
 			})
 			if(flag){
+				quote.responses = undefined;
 				uQuotes.push(quote);
+			}else{
+				quote.responses = undefined;
+				quote.responses = rmxResponse;
+				aQuotes.push(quote);
 			}
 		});
 		console.log("about to send response");
