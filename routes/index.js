@@ -135,6 +135,7 @@ router.post('/signup', function(req, res, next){
     var pan = req.body.pan || null;
     var gstin = req.body.gstin || null;
     var password = req.body.password;
+    var company = req.body.company;
     var password2 = req.body.password2;
     var userType = 'contractor';
 
@@ -165,6 +166,7 @@ router.post('/signup', function(req, res, next){
             custType:custType,
             contact:contact,
             pan:pan,
+            company: company,
             gstin:gstin,
             password:password,
             userType:userType

@@ -22,6 +22,9 @@ var UserSchema = mongoose.Schema({
         type:Number,
         required:true
     },
+    company:{
+        type: String
+    },
     userType:{
         type:String,
         required:true
