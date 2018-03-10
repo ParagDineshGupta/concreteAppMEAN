@@ -17,10 +17,10 @@
                             <table class="table table-hover">
                                 <tbody>
                                     <tr><p><b>location: </b> {{quote.customerSite}}</p></tr>
-                                    <tr><p><b>Generation Date : </b> {{quote.requiredDate}}</p></tr>
+                                    <tr><p><b>Generation Date : </b> {{quote.generationDate}}</p></tr>
                                     <tr><p><b>Customer Name: </b> {{quote.requestedBy}}</p></tr>
                                     <tr><p><b>Company Name: </b> {{quote.companyName}}</p></tr>
-                                    <tr><p><b>Required By: </b> {{quote.requiredByDate}}</p></tr>
+                                    <tr><p><b>Required By: </b> {{quote.requiredDate}}</p></tr>
                                     <button class="btn btn-primary " type="button" (click)="onResponse(quote._id)">Response</button>
                                     <form [formGroup]="responseForm"
                                           (ngSubmit)="onSubmit()"  
@@ -40,8 +40,8 @@
                                                    formControlName = "validTill">
                                         </div>
                                         <div class="form-group">
-                                            <label for="quoteId"> Quotation Id </label>
-                                            <input type="text" 
+                                           <!-- <label for="quoteId"> Quotation Id </label> -->
+                                            <input type="hidden" 
                                                    id="quoteId" 
                                                    class="form-control"
                                                    formControlName  = "quoteId" ngModel="{{quoteId}}">
@@ -52,12 +52,14 @@
                                 </tbody>
                             </table>
                         </div>
-                       
+                          
                         
                         <!-- <a (click)="loadMoreMyLeads()" [ngClass]="(moreMyLeadsAvailable) ? 'inactive-link' : '' " class="load-more-my-leads">
                             <span class="center">Load More</span> 
                         </a> -->
                     </div>
+                </div>    
+                <div class="col-md-12 col-sm-12" id = "top-panel" >
                     <div class="panel panel-primary" id="dashboard-top-panel" >
                         <div class="panel-body " id="dashboard-top-panel-body" > <span class="fa fa-paper-plane"></span>Quotations Responded</div>
                     </div>
@@ -68,9 +70,15 @@
                                 <tbody>
                                     <tr><p><b>location: </b> {{quote.customerSite}}</p></tr>
                                     <tr><p><b>Generation Date : </b> {{quote.generationDate}}</p></tr>
-                                    <tr><p><b>Customer Name: </b> {{quote.requestedBy}}</p></tr>
-                                    <tr><p><b>Company Name: </b> {{quote.companyName}}</p></tr>
-                                    <tr><p><b>Required By: </b> {{quote.requiredDate}}</p></tr>                            
+                                    <tr><p><b>Customer Name : </b> {{quote.requestedBy}}</p></tr>
+                                    <tr><p><b>Company Name : </b> {{quote.companyName}}</p></tr>
+                                    <tr><p><b>Required By : </b> {{quote.requiredDate}}</p></tr>
+                                    <div *ngFor ="let response of quote.responses"> 
+                                    <tr><p><b>Your response is </b></p></tr>
+                                    <tr><p><b>Price :</b>{{response.price}}</p></tr>  
+                                    <tr><p><b>Valid Till :</b>{{response.validTill}}</p></tr> 
+                                     
+                                    </div>                                                                                                                                              
                                     <button class="btn btn-primary " type="button" (click)="onDelete()">Delete</button>
                                     <div class="delQuote">
                                             <form (ngSubmit)="onDelete()" #f="ngForm"  >
@@ -98,7 +106,9 @@
                             </table>
                         </div>
                     </div>
-                </div>    
+                    
+                </div>
+                   
             </div>
         </div>
         <footer-cmp></footer-cmp>

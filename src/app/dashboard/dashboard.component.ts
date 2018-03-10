@@ -49,9 +49,26 @@ export class DashboardComponent implements OnInit{
                     console.log(results);
                     this.aQuotes = results.aQuotes;
                     this.uQuotes = results.uQuotes;
+                    this.aQuotes.forEach(element => {
+                        element.requiredDate = new Date(element.requiredDate * 1)
+                        element.requiredDate = element.requiredDate.toString().substring(0, 24)
+                        element.generationDate = new Date(element.generationDate * 1)
+                        element.generationDate = element.generationDate.toString().substring(0, 24)
+                        
+                    });
+                    this.uQuotes.forEach(element => {
+                        element.requiredDate = new Date(element.requiredDate * 1)
+                        element.requiredDate = element.requiredDate.toString().substring(0, 24)
+                        element.generationDate = new Date(element.generationDate * 1)
+                        element.generationDate = element.generationDate.toString().substring(0, 24)
+                        
+                    });
+                    
                     return;
                 }
                 console.log(results);
+
+                
             })
     }
  

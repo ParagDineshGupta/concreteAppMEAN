@@ -54,19 +54,19 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Name</label>
-                                                <input type="text" formControlName="name" class="form-control border-input" placeholder="Name" ngModel="{{userDetails.user_name}}">
+                                                <input type="text" formControlName="name" class="form-control border-input" [ngModel]="userDetails.name">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Mobile</label>
-                                                <input type="text" class="form-control border-input" placeholder="Mobile" ngModel="{{userDetails.user_mobile}}" formControlName="mobile" >
+                                                <input type="text" class="form-control border-input"  formControlName="mobile" [ngModel]="userDetails.contact">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input type="text" class="form-control border-input" placeholder="Email Address" ngModel="{{userDetails.user_email}}" formControlName="email">
+                                                <input type="text" class="form-control border-input"  formControlName="email" [ngModel]="userDetails.email">
                                             </div>
                                             <br>
                                         </div>
