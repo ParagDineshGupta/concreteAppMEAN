@@ -81,5 +81,9 @@ module.exports.findPoByContractor = function(id, callback){
 }
 
 module.exports.findPoBySupplier = function(id, callback){
-    PO.find({supplierId: id} , callback);
+    PO.find({supplerId:(id)} , callback);
+}
+
+module.exports.findPoByPOId = function(id, callback){
+    PO.findById({_id: id}, callback);
 }

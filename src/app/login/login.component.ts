@@ -24,8 +24,7 @@ export class LoginComponent implements OnInit {
     name: new FormControl(),
     email:new FormControl(),
     contact: new FormControl(),
-    pan: new FormControl(),
-    gstin: new FormControl(),
+    company: new FormControl(),
     pwd: new FormControl(),
     pwd2: new FormControl()
   });
@@ -82,8 +81,7 @@ export class LoginComponent implements OnInit {
       name : this.signupform.value.name,
       email : this.signupform.value.email,
       contact : this.signupform.value.contact,
-      pan : this.signupform.value.pan,
-      gstin : this.signupform.value.gstin,
+      company : this.signupform.value.company,
       password : this.signupform.value.pwd,
       password2 : this.signupform.value.pwd2,
     }

@@ -66,10 +66,9 @@ export class DashboardComponent implements OnInit{
                     
                     return;
                 }
-                console.log(results);
+            console.log(results);
 
-                
-            })
+        })
     }
  
     onResponse(id : any) {

@@ -714,7 +714,8 @@ router.post('/addorder', function(req, res, next){
                 statusDesc:statusDesc
             });
 
-            PO.findPoBySupplier(POId, function(err, purOrder){
+            console.log(POId)
+            PO.findPoByPOId(POId, function(err, purOrder){
                 if(err){
                     console.log(err);
                     res.json({
@@ -729,7 +730,10 @@ router.post('/addorder', function(req, res, next){
                         msg:"The Purchase Order quantity is not enough to fulfill current Order. Please Order a new PO."
                     })
                 }else{
-                    purOrder.remQuantity -= quantity;
+                    console.log(purOrder)
+                    purOrder.remQuantity -= quantity * 1;
+                    console.log(purOrder)
+                    purOrder.save();
                     Order.createOrder(newOrder, function (err, order) {
                         if(err){
                             return handleError(err, null, res);
