@@ -221,7 +221,7 @@ router.post('/getsuppliername', function(req, res){
         if(user){
             return res.json({
                 success:true,
-                user: user.name
+                supplierName: user.name
             })
         }else{
             return res.json({
