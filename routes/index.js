@@ -186,6 +186,52 @@ router.post('/signup', function(req, res, next){
     }
 });
 
+
+
+//this api will check for existing users
+router.post('/doesexist', function(req, res){
+    var email = req.body.email;
+    User.findOneByEmail(email, function(err, user){
+        if(err){
+            return handleError(err, null, res);
+        }
+        if(user){
+            return res.json({
+                success:true,
+                user:true
+            })
+        }else{
+            return res.json({
+                success:true,
+                user:false
+            })
+        }
+    })
+});
+
+
+router.post('/getsuppliername', function(req, res){
+    var id = req.body.supplierId;
+    console.log(id)
+    User.findOneById(id, function(err, user){
+        if(err){
+            return handleError(err, null, res);
+        }
+        console.log(user)
+        if(user){
+            return res.json({
+                success:true,
+                user: user.name
+            })
+        }else{
+            return res.json({
+                success:false,
+                msg:"no user found"
+            })
+        }
+    })
+})
+
 //this route is used to add a customer site
 router.post('/addsite', function(req, res){
 
