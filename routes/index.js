@@ -1,4 +1,4 @@
-var express = require('express');
+    var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
@@ -19,6 +19,7 @@ var Order = require('../models/Orders');
 var Issue = require('../models/Issues');
 var Quote = require('../models/Quotations');
 var PO    = require('../models/PurchaseOrder');
+var City = require('../models/Cities');
 
 
 //These are all the get requests
@@ -145,7 +146,7 @@ router.post('/signup', function(req, res, next){
     req.checkBody('name', 'Name cannot be empty').notEmpty();
     req.checkBody('email', 'Email cannot be empty').notEmpty();
     req.checkBody('contact', 'contact cannot be empty').notEmpty();
-    req.checkBody('pan', 'Pan cannot be empty').notEmpty();
+    //req.checkBody('pan', 'Pan cannot be empty').notEmpty();
     //req.checkBody('gstin', 'GSTIN cannot be empty').notEmpty();
     req.checkBody('email', "Enter a valid email").isEmail();
     req.checkBody('password', 'password cannot be empty').notEmpty();
@@ -186,6 +187,15 @@ router.post('/signup', function(req, res, next){
     }
 });
 
+
+router.get('/getcities', function(req, res){
+    City.getAllCities(function(err, cities){
+        res.json({
+            success:true,
+            cities: cities
+        })
+    })
+})
 
 
 //this api will check for existing users
@@ -230,6 +240,28 @@ router.post('/getsuppliername', function(req, res){
             })
         }
     })
+});
+
+
+router.post('/addcity', function(req, res){
+    var city = req.body.city;
+
+    var newCity = new City({
+        cityName: city
+    });
+
+    City.saveCity(newCity, function(err, city){
+        if(err){
+            return handleError(err, null, res);
+        }else{
+            //console.log(user);
+            res.json({
+                success:true,
+                city: city
+            });
+        }
+    });
+
 })
 
 //this route is used to add a customer site
@@ -249,11 +281,13 @@ router.post('/addsite', function(req, res){
         var lat = req.body.lat;
         var long = req.body.long;
         var address = req.body.address;
+        var city = req.body.city;
 
         req.checkBody('name', 'Name cannot be empty').notEmpty();
         req.checkBody('lat', 'lat cannot be empty').notEmpty();
         req.checkBody('long', 'long cannot be empty').notEmpty();
         req.checkBody('address', 'address cannot be empty').notEmpty();
+        req.checkBody('city', 'city cannot be empty').notEmpty();
 
         var errors = req.validationErrors();
         //console.log(errors);
@@ -266,6 +300,7 @@ router.post('/addsite', function(req, res){
             var customerSite = {
                 name:name,
                 lat:lat,
+                city:city,
                 long:long,
                 address:address
             };

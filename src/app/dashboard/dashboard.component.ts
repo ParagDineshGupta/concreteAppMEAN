@@ -57,6 +57,7 @@ export class DashboardComponent implements OnInit{
                         
                     });
                     this.uQuotes.forEach(element => {
+
                         element.requiredDate = new Date(element.requiredDate * 1)
                         element.requiredDate = element.requiredDate.toString().substring(0, 24)
                         element.generationDate = new Date(element.generationDate * 1)
@@ -72,9 +73,11 @@ export class DashboardComponent implements OnInit{
     }
  
     onResponse(id : any) {
-        console.log(this.quoteId);
-        this.quoteId = id;
-        console.log(this.quoteId);
+        if(!this.quoteId){
+            this.quoteId = id;
+        }else{
+            this.quoteId = null;
+        }
     }
 
     onSubmit() {

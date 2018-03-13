@@ -21,7 +21,7 @@
                   <label for="pwd">Password:</label>
                   <input type="password" class="form-control border-input" id="pwd" formControlName="pwd">
                 </div>
-                <button type="button" (click)="logInUser()" class="btn btn-default"><span class="fa fa-sign-in"></span> Login</button>
+                <button type="submit" (click)="logInUser()" class="btn btn-default"><span class="fa fa-sign-in"></span> Login</button>
               </form>
             </div>
             <div *ngIf="!isloginForm"  class="signup-form">
@@ -50,7 +50,7 @@
                   <label for="password">Confirm Password:</label>
                   <input type="password" class="form-control border-input" id="pwd2" formControlName="pwd2">
                 </div>
-                <button type="button" (click)="signupUser()" class="btn btn-default"><span class="fa fa-sign-in"></span> SignUp</button>
+                <button type="submit" (click)="signupUser()" class="btn btn-default"><span class="fa fa-sign-in"></span> SignUp</button>
               </form>
             </div>
           </div>

@@ -180,8 +180,7 @@ router.post('/signup', function(req, res, next){
 	var name = req.body.name;
 	var email = req.body.email;
 	var contact = req.body.contact;
-	var pan = req.body.pan;
-	var gstin = req.body.gstin;
+	var city = req.body.city;
 	var password = req.body.password;
 	var password2 = req.body.password2;
 	var userType = 'supplier';
@@ -192,8 +191,6 @@ router.post('/signup', function(req, res, next){
 	req.checkBody('name', 'Name cannot be empty').notEmpty();
 	req.checkBody('email', 'Email cannot be empty').notEmpty();
 	req.checkBody('contact', 'contact cannot be empty').notEmpty();
-	req.checkBody('pan', 'Pan cannot be empty').notEmpty();
-	req.checkBody('gstin', 'GSTIN cannot be empty').notEmpty();
 	req.checkBody('email', "Enter a valid email").isEmail();
 	req.checkBody('password', 'password cannot be empty').notEmpty();
 	req.checkBody('password2', 'confirm password cannot be empty').notEmpty();

@@ -5,8 +5,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class LoginService {
   
   private logInUrl = 'http://concrete.equipshare.in/api/users/login';
-  //private logInUrl = 'https://leads.engineerbabu.com/api/index/login';
-  private signupUrl = 'http://concrete.equipshare.in/api/users/signup'
+  private signupUrl = 'http://concrete.equipshare.in/api/users/signup';
+
+  // private logInUrl = 'http://localhost:3000/api/users/login';
+  // private signupUrl = 'http://localhost:3000/api/users/signup'
   
   constructor(private http: HttpClient) { }
 

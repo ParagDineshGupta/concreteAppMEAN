@@ -30,12 +30,13 @@ var UserSchema = mongoose.Schema({
         required:true
     },
     pan:{
-        type:String,
-        required:true
+        type:String
+    },
+    city:{
+        type:String
     },
     gstin:{
-        type:String,
-        required:true
+        type:String
     },
     password:{
         type:String,
@@ -53,6 +54,9 @@ var UserSchema = mongoose.Schema({
             type:String
         },
         lat:{
+            type:String
+        },
+        city:{
             type:String
         },
         long:{

@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit {
       message: message
     },{
         type: type[color],
-        timer: 400000,
+        timer: 5,
         placement: {
             from: from,
             align: align

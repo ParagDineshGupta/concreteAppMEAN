@@ -29,16 +29,18 @@ export class PurchaseOrderComponent implements OnInit {
          console.log(results);
          results.resuts.forEach( (porder) => {
             if(porder.confirmedBySupplier){
-              var t = new Date( porder.generationDate * 1 );
-              porder.generationDate = t.toString().substr(0, 25);
-              var t = new Date( porder.validTill * 1 );
-              porder.validTill = t.toString().substr(0, 25);                                                                                     
+              // var t = new Date( porder.generationDate * 1 );
+              // porder.generationDate = t.toString().substr(0, 25);
+              // var t = new Date( porder.validTill * 1 );
+              // porder.validTill = t.toString().substr(0, 25);                                                                                     
               this.aQuotes.push(porder)
             }else{
-              var t = new Date( porder.generationDate * 1 );
-              porder.generationDate = t.toString().substr(0, 25);
-              var t = new Date( porder.validTill * 1 );
-              porder.validTill = t.toString().substr(0, 25);
+              // var t = new Date( porder.generationDate * 1 );
+              // porder.generationDate = t.toString().substr(0, 25);
+              // console.log(porder.validTill)
+              // var t = new Date( porder.validTill * 1 );
+              // console.log(t)
+              // porder.validTill = t.toString().substr(0, 25);
               this.uQuotes.push(porder);
             }
          })
