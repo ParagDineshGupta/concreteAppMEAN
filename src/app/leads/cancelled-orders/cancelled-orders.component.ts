@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { OrdersService } from '../../services/orders.service';
 
 @Component({
-  selector: 'app-archive-leads',
-  templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.css'],
+  selector: 'app-cancelled-orders',
+  templateUrl: './cancelled-orders.component.html',
+  styleUrls: ['./cancelled-orders.component.css'],
   providers: [OrdersService]
 })
-export class OrdersComponent implements OnInit {
+export class CancelledOrdersComponent implements OnInit {
 
-  todaysOrders : any =[];
-  todayaOrders : any =[];
-  tomorrowsOrders : any =[];
-  tomorrowaOrders : any =[];
-  upcomingOrders : any =[];
+  todaycOrders : any =[];
+ 
+  tomorrowcOrders : any =[];
+  
+  upcomingcOrders : any =[];
 
   td : any = new Date();
   tomdate : any = new Date(new Date().getTime() + 24*60*60*1000);
@@ -27,21 +27,19 @@ export class OrdersComponent implements OnInit {
   constructor(private ordersServive: OrdersService) { }
 
   ngOnInit() {
-    this.getAllOrders();
+    this.getCOrders();
   }
 
-  getAllOrders() {
-      this.ordersServive.getOrders()
+  getCOrders() {
+      this.ordersServive.getCancelledOrders()
           .subscribe((results:any) => {
               if(results.success) {
                   console.log("!!!");
                   console.log(results);
                   
-                  this.todaysOrders = [];
-                  this.todayaOrders = [];
-                  this.tomorrowsOrders = [];
-                  this.tomorrowaOrders = [];
-                  this.upcomingOrders = [];
+                  this.todaycOrders = [];
+                  this.tomorrowcOrders = [];
+                  this.upcomingcOrders = [];
                   results.results.forEach( (order) => {
                     order.requiredByDate = new Date(order.requiredByDate * 1);
                     order.requiredByDate = order.requiredByDate.toString().substring(0, 24);
@@ -56,21 +54,15 @@ export class OrdersComponent implements OnInit {
                     
                     //this.odDate = new Date(order.requiredByDate.getFullYear(),order.requiredByDate.getMonth(),order.requiredByDate.getDate()); 
                     //console.log(this.odDate);
-                    if(year == this.y && month == this.m && date == this.d && order.status == "submitted") {
-                      this.todaysOrders.push(order);
-                      //console.log(this.todaysOrders);
-                    }else  if(year == this.y && month == this.m && date == this.d && order.status == "approved") {
-                      this.todayaOrders.push(order);
-                      //console.log(this.todayaOrders);
-                    }else if(year == this.year && month == this.month && date == this.date && order.status == "submitted") {
-                      this.tomorrowsOrders.push(order);
-                      //console.log(this.tomorrowsOrders);
-                    }else if(year == this.year && month == this.month && date == this.date && order.status == "approved") {
-                      this.tomorrowaOrders.push(order);
-                      //console.log(this.tomorrowaOrders);
+                    if(year == this.y && month == this.m && date == this.d) {
+                      this.todaycOrders.push(order);
+                      //console.log(this.todaycOrders);
+                    }else if(year == this.year && month == this.month && date == this.date) {
+                      this.tomorrowcOrders.push(order);
+                      //console.log(this.tomorrowcOrders);
                     }  
                     else {
-                      this.upcomingOrders.push(order);
+                      this.upcomingcOrders.push(order);
                     }
                     
                     
@@ -81,7 +73,7 @@ export class OrdersComponent implements OnInit {
           });
   }
 
-  onPlaceOrder(id : any) {
+  /*onPlaceOrder(id : any) {
     let data = {
         orderId : id
     }
@@ -95,17 +87,7 @@ export class OrdersComponent implements OnInit {
            console.log(data);
          }
        })
-    }
+    }*/
  
-
-  // getArchiveLeads(){
-  //   this.archiveleadsservice.getArchiveLeads()
-  //     .subscribe((results:any) => {
-  //       if(results.success){
-  //         //console.log(results.data);
-  //         this.archiveLeads = results.data;
-  //       }
-  //     }, (err:any) => {})
-  // }
 
 }

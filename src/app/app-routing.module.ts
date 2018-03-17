@@ -9,6 +9,7 @@ import { OrdersComponent } from './leads/orders/orders.component';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth/auth-guard';
+import { CancelledOrdersComponent } from './leads/cancelled-orders/cancelled-orders.component';
 
 
 const routes: Routes = [
@@ -33,8 +34,8 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path:'addleads',
-    component: AddLeadsComponent,
+    path:'archiveleads',
+    component: CancelledOrdersComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -43,8 +44,13 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path:'archiveleads',
+    path:'archive',
     component:OrdersComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'cancelorder',
+    component:CancelledOrdersComponent,
     canActivate: [AuthGuard]
   },
   {

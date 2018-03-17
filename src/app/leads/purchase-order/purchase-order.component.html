@@ -20,13 +20,13 @@
 						<div class="panel-body" ><span class="fa fa-paper-plane"></span>Pending Purchase Order</div>
 						<div class="orders">
 								<div class=" orderBlock" *ngFor="let quote of uQuotes">
-									<h4><span class="fa fa-truck"></span> {{quote.quantity}} cubic meter of {{quote.quality}} Grade Concrete</h4>
+									<h4><span class="fa fa-truck"></span> {{quote.requestedBy}} Of {{quote.companyName}}</h4>
 									<table class="table">
 										<tbody>
 											<tr><p><b>location: </b> {{quote.customerSite}}</p></tr>
 											<tr><p><b>Generation Date : </b> {{quote.generationDate}}</p></tr>
-											<tr><p><b>Customer Name: </b> {{quote.requestedBy}}</p></tr>
-											<tr><p><b>Company Name: </b> {{quote.companyName}}</p></tr>
+											<tr><p><b>Quantity: </b> {{quote.quantity}}</p></tr>
+											<tr><p><b>Quality: </b> {{quote.quality}}</p></tr>
 											<tr><p><b>Price : </b> {{quote.price}}</p></tr>
 											<tr><p><b>Valid Till Date: </b> {{quote.validTill}}</p></tr>
 											<tr><button class="btn btn-success" type="button" (click)="onConfirm(quote._id)"> Purchase </button></tr>
@@ -40,13 +40,13 @@
 						<div class="panel-body" ><span class="fa fa-paper-plane"></span> Confirmed Purchase Order</div>
 						<div class="orders">
 								<div class=" orderBlock" *ngFor="let quote of aQuotes">
-									<h4><span class="fa fa-truck"></span> {{quote.quantity}} cubic meter of {{quote.quality}} Grade Concrete</h4>
+									<h4><span class="fa fa-truck"></span> {{quote.requestedBy}} Of {{quote.companyName}}</h4>
 									<table class="table ">
 										<tbody>
 											<tr><p><b>location: </b> {{quote.customerSite}}</p></tr>
 											<tr><p><b>Generation Date : </b> {{quote.generationDate}}</p></tr>
-											<tr><p><b>Customer Name: </b> {{quote.requestedBy}}</p></tr>
-											<tr><p><b>Company Name: </b> {{quote.companyName}}</p></tr>
+											<tr><p><b>Quanitiy</b> {{quote.quantity}}</p></tr>
+											<tr><p><b>Quality </b> {{quote.quality}}</p></tr>
 											<tr><p><b>Price : </b> {{quote.price}}</p></tr>
 											<tr><p><b>Valid Till Date: </b> {{quote.validTill}}</p></tr>
 										</tbody>

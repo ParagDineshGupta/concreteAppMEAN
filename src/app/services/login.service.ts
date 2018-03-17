@@ -6,6 +6,7 @@ export class LoginService {
   
   private logInUrl = 'http://concrete.equipshare.in/api/users/login';
   private signupUrl = 'http://concrete.equipshare.in/api/users/signup';
+  private cityUrl = 'http://concrete.equipshare.in/api/getcities';                 
 
   // private logInUrl = 'http://localhost:3000/api/users/login';
   // private signupUrl = 'http://localhost:3000/api/users/signup'
@@ -19,7 +20,11 @@ export class LoginService {
 
   signupUser(data:any){
     console.log(data)
-    return this.http.post(this.signupUrl, data)
+    return this.http.post(this.signupUrl, data);
+  }
+
+  getAllCities() {
+    return this.http.get(this.cityUrl);
   }
 
 }

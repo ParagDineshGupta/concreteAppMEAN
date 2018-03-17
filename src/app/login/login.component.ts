@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit {
     contact: new FormControl(),
     company: new FormControl(),
     pwd: new FormControl(),
-    pwd2: new FormControl()
+    pwd2: new FormControl(),
+    city: new FormControl()
   });
   
   displayLogin(){
@@ -41,12 +42,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
+  cityName : any = [];
   isloginForm = true;
 
   constructor(private cookieService: CookieService, private loginservice:LoginService, private router: Router) { }
 
   ngOnInit() {
+    this.getCity();
   }
   logInUser(){
     let data = {
@@ -76,12 +78,29 @@ export class LoginComponent implements OnInit {
   }
 
 
+  getCity() {
+    this.loginservice.getAllCities()
+      .subscribe((results:any) => {
+        if(results.success) {
+          console.log(results);
+          this.cityName = [];
+          results.cities.forEach( (cities) => {
+            this.cityName.push(cities);
+            console.log(this.cityName);
+          })
+        
+        }
+      })
+  }
+  
+
   signupUser(){
     var data = {
       name : this.signupform.value.name,
       email : this.signupform.value.email,
       contact : this.signupform.value.contact,
       company : this.signupform.value.company,
+      city : this.signupform.value.city,
       password : this.signupform.value.pwd,
       password2 : this.signupform.value.pwd2,
     }

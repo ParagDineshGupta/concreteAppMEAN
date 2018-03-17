@@ -21,6 +21,7 @@ import { PurchaseOrderComponent } from './leads/purchase-order/purchase-order.co
 import { OrdersComponent } from './leads/orders/orders.component';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { LoginComponent } from './login/login.component';
+import { CancelledOrdersComponent } from './leads/cancelled-orders/cancelled-orders.component';
 
 
 
@@ -34,7 +35,8 @@ import { LoginComponent } from './login/login.component';
     AddLeadsComponent,
     OrdersComponent,
     AllUsersComponent,
-    LoginComponent
+    LoginComponent,
+    CancelledOrdersComponent
   ],
   imports: [
     BrowserModule,

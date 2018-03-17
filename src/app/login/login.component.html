@@ -39,9 +39,17 @@
                   <input type="text" class="form-control border-input" id="contact" formControlName="contact">
                 </div>
                 <div class="form-group">
-                  <label for="contact">Company Name:</label>
-                  <input type="text" class="form-control border-input" id="contact" formControlName="company">
+                    <label for="contact">Company Name:</label>
+                    <input type="text" class="form-control border-input" id="contact" formControlName="company">
                 </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input list="cities" class="form-control border-input" id="contact" formControlName="city">
+                    <datalist id="cities">
+                      <option *ngFor="let city of cityName" value="{{ city.cityName }}">{{ city.cityName }}</option>
+                    </datalist>
+                </div>
+                
                 <div class="form-group">
                   <label for="pwd">Password:</label>
                   <input type="password" class="form-control border-input" id="pwd" formControlName="pwd">
