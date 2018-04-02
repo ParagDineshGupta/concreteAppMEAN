@@ -2,6 +2,9 @@
 var router = express.Router();
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
+
+var sendgridUser = process.env.SENDGRID_USERNAME;
+var sendgridPass = process.env.SENDGRID_PASS;
 //this is used for generating SVG Captchas
 var svgCaptcha = require('svg-captcha');
 var async = require('async');
@@ -518,7 +521,7 @@ router.get('/history', function(req, res){
 //this is post for forgot password which requires user's email id
 router.post('/forgot', function(req, res){
     var email = req.body.email;
-    
+    console.log(email);
     User.findOneByEmail(email, function(err, user){
         if(err){
             return handleError(err, null, res)
@@ -543,8 +546,8 @@ router.post('/forgot', function(req, res){
             var smtpTransport = nodemailer.createTransport({
                 service:'SendGrid',
                 auth:{
-                    user:'jarvis123',
-                    pass:'abhansh@123'
+                    user:sendgridUser,
+                    pass:sendgridPass
                 }
             });
             var mailOptions = {
