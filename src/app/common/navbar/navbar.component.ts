@@ -3,7 +3,6 @@ import { Component, OnInit, Renderer, ViewChild, ElementRef } from '@angular/cor
 import {  FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { AddleadService } from '../../services/addlead.service';
 import { CookieService } from 'ngx-cookie-service';
 
 
@@ -11,7 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
     moduleId: module.id,
     selector: 'navbar-cmp',
     templateUrl: 'navbar.component.html',
-    providers: [AddleadService, CookieService]
+    providers: [ CookieService]
 })
 
 export class NavbarComponent implements OnInit{
@@ -29,7 +28,7 @@ export class NavbarComponent implements OnInit{
 
     @ViewChild("navbar-cmp") button;
 
-    constructor(location:Location, private cookieservice: CookieService ,private renderer : Renderer, private element : ElementRef, private addlead: AddleadService, private router: Router) {
+    constructor(location:Location, private cookieservice: CookieService ,private renderer : Renderer, private element : ElementRef, private router: Router) {
         this.location = location;
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
@@ -43,22 +42,6 @@ export class NavbarComponent implements OnInit{
     logout(){
         this.cookieservice.delete('User');
         this.router.navigate(['/login']);
-    }
-
-    createNewLead(){
-        //console.log(this.leadForm.value);
-        this.addlead.createNewLead(this.leadForm.value.email)
-            .subscribe((results:any) => {
-                if(results.success){
-                    //console.log(results);
-                    this.router.navigate(['/addleads/' +  results.result.insertId + '/' +  this.leadForm.value.email]);
-                }else{
-                    //console.log(results);
-                    return false;
-                }
-            }, (err:any) => {
-                //console.log(err);
-            })
     }
 
 

@@ -1,116 +1,134 @@
 <div class="wrapper">
-    <div class="sidebar" data-background-color="white" data-active-color="danger">
-        <sidebar-cmp></sidebar-cmp>
-    </div>
-    <div class="main-panel">
-        <navbar-cmp></navbar-cmp>
-        <div class="content">
-            <div class="container-fluid">
-                
-                <div class="col-md-12 col-sm-12" >
-                    <div class="panel panel-primary" id="dashboard-top-panel" >
-                        <div class="panel-body " id="dashboard-top-panel-body" > <span class="fa fa-paper-plane"></span>Quotations Waiting To be Responded</div>
+  <div class="sidebar" data-background-color="white" data-active-color="danger">
+    <sidebar-cmp></sidebar-cmp>
+  </div>
+  <div class="main-panel">
+    <navbar-cmp></navbar-cmp>
+    <div class="content">
+      <div class="container-fluid">
+
+        <div class="col-md-12 col-sm-12">
+          <div class="panel panel-primary" id="dashboard-top-panel">
+            <div class="panel-body " id="dashboard-top-panel-body">
+              <span class="fa fa-paper-plane"></span>Quotations Waiting To be Responded</div>
+          </div>
+          <div class="orders">
+            <div class=" orderBlock1" *ngFor="let quote of uQuotes">
+              <h4>
+                <span class="fa fa-truck"></span> {{quote.requestedBy}} Of {{quote.companyName}}</h4>
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <p>
+                      <b>location: </b> {{quote.customerSite}}</p>
+                  </tr>
+                  <tr>
+                    <p>
+                      <b>Generation Date : </b> {{quote.generationDate}}</p>
+                  </tr>
+                  <tr>
+                    <p>
+                      <b>Quantity: </b> {{quote.quantity}}</p>
+                  </tr>
+                  <tr>
+                    <p>
+                      <b>Quality: </b> {{quote.quality}}</p>
+                  </tr>
+                  <tr>
+                    <p>
+                      <b>Required By: </b> {{quote.requiredDate}}</p>
+                  </tr>
+                  <button class="btn btn-primary " type="button" (click)="onResponse(quote._id)">Response</button>
+                  <form [formGroup]="responseForm" (ngSubmit)="onSubmit()" *ngIf="quote._id == quoteId">
+                    <div class="form-group">
+                      <label for="price"> Price </label>
+                      <input type="text" id="price" class="form-control" formControlName="price">
                     </div>
-                    <div class="orders">
-                        <div class=" orderBlock1" *ngFor="let quote of uQuotes">
-                            <h4><span class="fa fa-truck"></span> {{quote.requestedBy}} Of {{quote.companyName}}</h4>
-                            <table class="table table-hover">
-                                <tbody>
-                                    <tr><p><b>location: </b> {{quote.customerSite}}</p></tr>
-                                    <tr><p><b>Generation Date : </b> {{quote.generationDate}}</p></tr>
-                                    <tr><p><b>Quantity: </b> {{quote.quantity}}</p></tr>
-                                    <tr><p><b>Quality: </b> {{quote.quality}}</p></tr>
-                                    <tr><p><b>Required By: </b> {{quote.requiredDate}}</p></tr>
-                                    <button class="btn btn-primary " type="button" (click)="onResponse(quote._id)">Response</button>
-                                    <form [formGroup]="responseForm"
-                                          (ngSubmit)="onSubmit()"  
-                                          *ngIf="quote._id == quoteId">
-                                        <div class="form-group">
-                                            <label for="price"> Price </label>
-                                            <input type="text" 
-                                                   id="price" 
-                                                   class="form-control"
-                                                   formControlName = "price">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="valid"> Valid Till </label>
-                                            <input type="date" 
-                                                   id="valid" 
-                                                   class="form-control"
-                                                   formControlName = "validTill">
-                                        </div>
-                                        <div class="form-group">
-                                           <!-- <label for="quoteId"> Quotation Id </label> -->
-                                            <input type="hidden" 
-                                                   id="quoteId" 
-                                                   class="form-control"
-                                                   formControlName  = "quoteId" ngModel="{{quoteId}}">
-                                        </div>
-                                        <button class="btn btn-success" type="submit" [disabled]="!responseForm.valid"> Submit </button>
-                                    
-                                    </form>
-                                </tbody>
-                            </table>
-                        </div>
-                          
-                        
-                        <!-- <a (click)="loadMoreMyLeads()" [ngClass]="(moreMyLeadsAvailable) ? 'inactive-link' : '' " class="load-more-my-leads">
-                            <span class="center">Load More</span> 
-                        </a> -->
+                    <div class="form-group">
+                      <label for="valid"> Valid Till </label>
+                      <input type="date" id="valid" class="form-control" formControlName="validTill">
                     </div>
-                </div>    
-                <div class="col-md-12 col-sm-12" id = "top-panel" >
-                    <div class="panel panel-primary" id="dashboard-top-panel" >
-                        <div class="panel-body " id="dashboard-top-panel-body" > <span class="fa fa-paper-plane"></span>Quotations Responded</div>
+                    <div class="form-group">
+                      <!-- <label for="quoteId"> Quotation Id </label> -->
+                      <input type="hidden" id="quoteId" class="form-control" formControlName="quoteId" ngModel="{{quoteId}}">
                     </div>
-                    <div class="orders">
-                        <div class=" orderBlock" *ngFor="let quote of aQuotes">
-                            <h4><span class="fa fa-truck"></span> {{quote.requestedBy}} Of {{quote.companyName}}</h4>
-                            <table class="table table-hover">
-                                <tbody>
-                                    <tr><p><b>location: </b> {{quote.customerSite}}</p></tr>
-                                    <tr><p><b>Generation Date : </b> {{quote.generationDate}}</p></tr>
-                                    <tr><p><b>Quantity : </b> {{quote.quantity}}</p></tr>
-                                    <tr><p><b>Quality : </b> {{quote.quality}}</p></tr>
-                                    <tr><p><b>Required By : </b> {{quote.requiredDate}}</p></tr>
-                                    <div *ngFor ="let response of quote.responses"> 
-                                    <tr class="yourResponse"><p><b>Your response is </b></p></tr>
-                                    <tr><p><b>Price :</b>{{response.price}}</p></tr>  
-                                    <tr><p><b>Valid Till :</b>{{response.validTill}}</p></tr> 
-                                     
-                                    </div>                                                                                                                                              
-                                    <button class="btn btn-primary " type="button" (click)="onDelete()">Delete</button>
-                                    <div class="delQuote">
-                                            <form (ngSubmit)="onDelete()" #f="ngForm"  >
-                                                    <div class="form-group">
-                                                            <label for="quoteId"> Quote Id </label>
-                                                            <input type="text"
-                                                                   id="quoteId" 
-                                                                   name="quoteId" 
-                                                                   [(ngModel)]="_id"
-                                                                   class="form-control"
-                                                            >
-                                                     </div>
-                                                    <div class="form-group"> 
-                                                            <label for="reponseId"> Response Id </label>
-                                                            <input type="text" 
-                                                                   id="responseId"
-                                                                   name="responseId"
-                                                                   [(ngModel)]="responses["_id"]"
-                                                                   class="form-control"
-                                                            >
-                                                    </div>
-                                            </form>    
-                                    </div>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    
-                </div>
-                   
+                    <button class="btn btn-success" type="submit" [disabled]="!responseForm.valid"> Submit </button>
+
+                  </form>
+                </tbody>
+              </table>
             </div>
+          </div>
         </div>
-        <footer-cmp></footer-cmp>
+        <div class="col-md-12 col-sm-12" id="top-panel">
+          <div class="panel panel-primary" id="dashboard-top-panel">
+            <div class="panel-body " id="dashboard-top-panel-body">
+              <span class="fa fa-paper-plane"></span>Quotations Responded</div>
+          </div>
+          <div class="orders">
+            <div class=" orderBlock" *ngFor="let quote of aQuotes">
+              <h4>
+                <span class="fa fa-truck"></span> {{quote.requestedBy}} Of {{quote.companyName}}</h4>
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <p>
+                      <b>location: </b> {{quote.customerSite}}</p>
+                  </tr>
+                  <tr>
+                    <p>
+                      <b>Generation Date : </b> {{quote.generationDate}}</p>
+                  </tr>
+                  <tr>
+                    <p>
+                      <b>Quantity : </b> {{quote.quantity}}</p>
+                  </tr>
+                  <tr>
+                    <p>
+                      <b>Quality : </b> {{quote.quality}}</p>
+                  </tr>
+                  <tr>
+                    <p>
+                      <b>Required By : </b> {{quote.requiredDate}}</p>
+                  </tr>
+                  <div *ngFor="let response of quote.responses">
+                    <tr class="yourResponse">
+                      <p>
+                        <b>Your response is </b>
+                      </p>
+                    </tr>
+                    <tr>
+                      <p>
+                        <b>Price :</b>{{response.price}}</p>
+                    </tr>
+                    <tr>
+                      <p>
+                        <b>Valid Till :</b>{{response.validTill}}</p>
+                    </tr>
+
+                  </div>
+                  <button class="btn btn-primary " type="button" (click)="onDelete()">Delete</button>
+                  <div class="delQuote">
+                    <form (ngSubmit)="onDelete()" #f="ngForm">
+                      <div class="form-group">
+                        <label for="quoteId"> Quote Id </label>
+                        <input type="text" id="quoteId" name="quoteId" [(ngModel)]="_id" class="form-control">
+                      </div>
+                      <div class="form-group">
+                        <label for="reponseId"> Response Id </label>
+                        <input type="text" id="responseId" name="responseId" [(ngModel)]="responses[" _id "]" class="form-control">
+                      </div>
+                    </form>
+                  </div>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
     </div>
+    <footer-cmp></footer-cmp>
+  </div>
 </div>

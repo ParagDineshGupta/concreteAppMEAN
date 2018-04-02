@@ -4,17 +4,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class LoginService {
   
-  private logInUrl = 'http://concrete.equipshare.in/api/users/login';
-  private signupUrl = 'http://concrete.equipshare.in/api/users/signup';
-  private cityUrl = 'http://concrete.equipshare.in/api/getcities';                 
+  // private logInUrl = 'http://concrete.equipshare.in/api/users/login';
+  // private signupUrl = 'http://concrete.equipshare.in/api/users/signup';
+  // private cityUrl = 'http://concrete.equipshare.in/api/getcities';                 
 
-  // private logInUrl = 'http://localhost:3000/api/users/login';
-  // private signupUrl = 'http://localhost:3000/api/users/signup'
+  private logInUrl = 'http://localhost:8080/api/users/login';
+  private signupUrl = 'http://localhost:8080/api/users/signup';
+  private cityUrl = 'http://localhost:8080/api/getcities';
   
   constructor(private http: HttpClient) { }
 
-  logInUser(data:any){
-    //console.log(data);
+  logInUser(data: any) {
+    // console.log(data);
     return this.http.post(this.logInUrl, data);
   } 
 

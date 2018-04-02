@@ -5,7 +5,8 @@ import { BaseService } from './base.service';
 export class OrdersService {
 
   private orderUrl = 'pendingorders';
-  private cOrderUrl = 'pendingorders';
+  private cOrderUrl = 'cancelledorders';
+  private historyUrl = 'history';
   
   constructor(private http: BaseService) { }
 
@@ -17,7 +18,12 @@ export class OrdersService {
     return this.http.get(this.cOrderUrl);
   }
 
-  placeOrder(data : any) {
+  placeOrder(data: any) {
     return this.http.post(this.orderUrl, data);
+  }
+
+  getHistoryOrders() {
+    console.log("getting orders")
+    return this.http.get(this.historyUrl);
   }
 }

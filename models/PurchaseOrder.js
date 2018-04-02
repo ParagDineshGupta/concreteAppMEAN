@@ -39,6 +39,10 @@ var POSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    requestedByCompany:{
+        type:String,
+        required:true
+    },
     requestedById:{
         type:mongoose.Schema.Types.ObjectId,
         required:true

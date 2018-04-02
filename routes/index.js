@@ -11,6 +11,9 @@ const secret = "supersecretkey";
 //importing passport and its local strategy
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
+var sendgridUser = process.env.SENDGRID_USERNAME;
+var sendgridPass = process.env.SENDGRID_PASS;
 //var LocalStrategy = require('passport-local').Strategy;
 
 //here we import the User model
@@ -36,12 +39,6 @@ router.get('/signup', function(req, res, next){
     res.render('signup');
 });
 
-
-router.get('/testing', function(req,res){
-    Quote.getAllQuotesByUserIdTest(req.body.userId, function(err, results){
-        console.log(results);
-    })
-})
 
 
 function getAllUserDashboardDetails(req, res, userId, token){
@@ -187,6 +184,60 @@ router.post('/signup', function(req, res, next){
     }
 });
 
+router.post('/changepass', function(req, res){
+	var oldpass = req.body.oldpass;
+	var newpass = req.body.newpass;
+	var newpass2 = req.body.newpass2;
+
+	jwt.verify(req.headers.authorization, secret, function(err, decoded){
+		if(err){
+			console.log(req.headers.authorization)
+			console.log("%%%%%%%%%%%%%%%%%%%" + err);
+			res.json({
+				success:false,
+				msg:"some error occured"
+			})
+			return;
+		}
+		var userId = decoded.id;
+
+		User.findById(userId, function(err, user){
+			if(err){
+				handleError(err, '', res);
+				return;
+			}
+			bcrypt.compare(oldpass, user.password, function(err, match) {
+				if(!match){
+					res.json({
+						success:false,
+						msg:'old password is not correct'
+					});
+					return;
+				}
+				if(newpass != newpass2){
+					res.json({
+						success:false,
+						msg:'passwords do not match'
+					});
+					return;
+				}
+				bcrypt.hash(newpass, 10, function(err, hash){
+					if(err){
+						handleError(err, '', res);
+						return;
+					}
+					user.password = hash;
+					user.save();
+					res.json({
+						success:true,
+						msg:'password updates successfully'
+					});
+				});
+			});
+		})
+	});
+});
+
 
 router.get('/getcities', function(req, res){
     City.getAllCities(function(err, cities){
@@ -195,7 +246,7 @@ router.get('/getcities', function(req, res){
             cities: cities
         })
     })
-})
+});
 
 
 //this api will check for existing users
@@ -231,7 +282,7 @@ router.post('/getsuppliername', function(req, res){
         if(user){
             return res.json({
                 success:true,
-                supplierName: user.name
+                user: user.name
             })
         }else{
             return res.json({
@@ -404,8 +455,6 @@ router.post('/profile', function(req, res){
         req.checkBody('name', 'Name cannot be empty').notEmpty();
         req.checkBody('email', 'Email cannot be empty').notEmpty();
         req.checkBody('contact', 'contact cannot be empty').notEmpty();
-        req.checkBody('pan', 'Pan cannot be empty').notEmpty();
-        req.checkBody('gstin', 'GSTIN cannot be empty').notEmpty();
         req.checkBody('email', "Enter a valid email").isEmail();
         
         var errors = req.validationErrors();
@@ -586,6 +635,7 @@ router.post('/requestquote', function(req, res){
         var requiredDate = req.body.requiredDate;
         var requestedBy = req.body.name;
         var requestedById = userId;
+        var companyName = req.body.company;
 
         req.checkBody('quantity', 'quantity cannot be empty').notEmpty();
         req.checkBody('quality', 'quality cannot be empty').notEmpty();
@@ -605,6 +655,7 @@ router.post('/requestquote', function(req, res){
                 generationDate : generationDate,
                 requiredDate : requiredDate,
                 requestedBy : requestedBy,
+                requestedByCompany: companyName,
                 requestedById : requestedById
             });
 
@@ -661,6 +712,7 @@ router.post('/createpo', function(req, res){
         var customerSite = req.body.customerSite;
         var requestedBy = req.body.requestedBy;
         var requestedById = userId;
+        var company = req.body.companyName;
         var remQuantity = req.body.quantity;
         var supplierId = req.body.supplierId;
 
@@ -675,6 +727,7 @@ router.post('/createpo', function(req, res){
             requestedBy : requestedBy,
             requestedById : requestedById,
             supplierId : supplierId,
+            requestedByCompany: company,
             confirmedBySupplier:false
         });
 
@@ -713,7 +766,7 @@ router.post('/deletepo', function(req, res){
             })
         });
     });
-})
+});
 
 router.get('/pos', function(req, res){
     jwt.verify(req.headers.authorization, secret, function(err, decoded){
@@ -736,7 +789,9 @@ router.get('/pos', function(req, res){
             })
         });
     });
-})
+});
+
+
 
 //API to add an Order
 router.post('/addorder', function(req, res, next){
@@ -746,7 +801,7 @@ router.post('/addorder', function(req, res, next){
             //console.log("%%%%%%%%%%%%%%%%%%%" + err);
             res.json({
                 msg:"some error occured"
-            })
+            });
             return;
         }
         var userId =  decoded.id;

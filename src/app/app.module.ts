@@ -16,12 +16,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './user/user.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { LeadsComponent } from './leads/leads.component';
-import { AddLeadsComponent } from './leads/add-leads/add-leads.component';
 import { PurchaseOrderComponent } from './leads/purchase-order/purchase-order.component';
 import { OrdersComponent } from './leads/orders/orders.component';
-import { AllUsersComponent } from './all-users/all-users.component';
 import { LoginComponent } from './login/login.component';
 import { CancelledOrdersComponent } from './leads/cancelled-orders/cancelled-orders.component';
+import { HistoryComponent } from './leads/history/history.component';
 
 
 
@@ -32,11 +31,10 @@ import { CancelledOrdersComponent } from './leads/cancelled-orders/cancelled-ord
     UserComponent,
     LeadsComponent,
     PurchaseOrderComponent,
-    AddLeadsComponent,
     OrdersComponent,
-    AllUsersComponent,
     LoginComponent,
-    CancelledOrdersComponent
+    CancelledOrdersComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

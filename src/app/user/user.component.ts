@@ -13,85 +13,92 @@ import { Router } from '@angular/router';
 })
 export class UserComponent implements OnInit {
 
-  userDetails:any = Object;
-  gmailAuthLink:any = "";
+  userDetails: any = Object;
+  gmailAuthLink:  any = '';
+  errMsgContent: any = '';
+  successMsg: any = '';
+
+  updatePasswordForm = new FormGroup({
+    oldpass: new FormControl(),
+    newpass: new FormControl(),
+    newpass2: new FormControl()
+  });
+
+  updateUserDetailsForm = new FormGroup({
+    name: new FormControl(),
+    email: new FormControl(),
+    mobile: new FormControl(),
+    pan: new FormControl(),
+    gstin: new FormControl(),
+  });
+
+
   constructor(private userProfileService: UserprofileService, private cookieService: CookieService, private router: Router) { }
 
   ngOnInit() {
     this.getUserDetails();
   }
-
-  updatePasswordForm = new FormGroup({
-    oldpass:new FormControl(),
-    newpass:new FormControl(),
-    newpass2: new FormControl()
-  });
-
-  updateUserDetailsForm = new FormGroup({
-    name:new FormControl(),
-    email:new FormControl(),
-    mobile:new FormControl()
-  })
-
-
-
-
-  getUserDetails(){
+  getUserDetails() {
     this.userProfileService.getUserProfile()
-      .subscribe((results:any) => {
+      .subscribe((results: any) => {
         console.log(results)
-        if(results.success){
+        if (results.success) {
           this.userDetails = results.results;
-        }else{
-          //console.log("error receiving user profile details");
-          //console.log(results);
+        } else {
+          // console.log("error receiving user profile details");
+          // console.log(results);
         }
-      })
+      });
   }
 
-  logout(){
+  logout() {
     this.cookieService.delete('User');
     this.router.navigate(['/login']);
   }
-  updatePassword(){
-    let payload = {
+  updatePassword() {
+    const payload = {
       oldpass: this.updatePasswordForm.value.oldpass,
       newpass: this.updatePasswordForm.value.newpass,
       newpass2: this.updatePasswordForm.value.newpass2,
-    }
-    //console.log(payload);
+    };
+    // console.log(payload);
     this.userProfileService.updateUserPassword(payload)
-      .subscribe((results:any) => {
-        if(results.success){
-          //console.log("update password successful");
+      .subscribe((results: any) => {
+        if (results.success) {
+          // console.log("update password successful");
+          this.successMsg = 'password successfully updated';
           this.logout();
-        }else{
-          console.log("update password failed");
-          console.log(results);
+        } else {
+          this.errMsgContent = results.msg;
+          setTimeout(() => {
+            this.errMsgContent = '';
+          }, 5000);
         }
-      }, (err:any) => {
+      }, (err: any) => {
         console.log(err);
-      })
+      });
   }
 
-  updateUserDetails(){
-    var payload = {
-      name:this.updateUserDetailsForm.value.name,
-      email:this.updateUserDetailsForm.value.email,
-      mobile:this.updateUserDetailsForm.value.mobile,
-    }
-    //console.log(payload);
+  updateUserDetails() {
+    const payload = {
+      name: this.updateUserDetailsForm.value.name,
+      email: this.updateUserDetailsForm.value.email,
+      contact: this.updateUserDetailsForm.value.mobile,
+      pan: this.updateUserDetailsForm.value.pan,
+      gstin: this.updateUserDetailsForm.value.gstin,
+    };
+    console.log(payload);
     this.userProfileService.updateUserProfile(payload)
-      .subscribe((results:any) => {
-        if(results.success){
-          //console.log("update user profile successful");
+      .subscribe((results: any) => {
+        if (results.success) {
+          // console.log("update user profile successful");
           this.getUserDetails();
-        }else{
+        } else {
           console.log(results);
         }
-      }, (err:any) => {
+      }, (err: any) => {
         console.log(err);
-      })
+      });
   }
 
   

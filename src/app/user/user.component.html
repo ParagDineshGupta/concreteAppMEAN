@@ -22,7 +22,9 @@
                                 <p class="description text-center">
                                     {{userDetails.name}} <br>
                                     {{userDetails.contact}}<br> 
-                                     {{userDetails.email}}
+                                     {{userDetails.email}} <br>
+                                     {{userDetails.gstin}}<br> 
+                                     {{userDetails.pan}}
                                 </p>
                             </div>
                             <hr>
@@ -70,6 +72,20 @@
                                             </div>
                                             <br>
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Pan</label>
+                                                <input type="text" class="form-control border-input"  formControlName="pan" [ngModel]="userDetails.pan">
+                                            </div>
+                                            <br>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>GstIn</label>
+                                                <input type="text" class="form-control border-input"  formControlName="gstin" [ngModel]="userDetails.gstin">
+                                            </div>
+                                            <br>
+                                        </div>
                                     </div>
                                     <div>
                                         <button type="button" (click)="updateUserDetails()" class="btn btn-info btn-fill btn-wd">Update Profile</button>
@@ -110,6 +126,8 @@
                                         </div>
                                     </div>
                                     <br>
+                                    <p class="errMsg">{{errMsgContent}}</p>
+                                    <p class="successMsg">{{successMsg}}</p>
                                     <div>
                                         <button type="button" (click)="updatePassword()" class="btn btn-info btn-fill btn-wd">Change Password</button>
                                     </div>

@@ -15,8 +15,8 @@ export class OrdersComponent implements OnInit {
   tomorrowaOrders : any =[];
   upcomingOrders : any =[];
 
-  td : any = new Date();
-  tomdate : any = new Date(new Date().getTime() + 24*60*60*1000);
+  td: any = new Date();
+  tomdate: any = new Date(new Date().getTime() + 24*60*60*1000);
   y : any = this.td.getFullYear();
   m : any = this.td.getMonth();
   d : any = this.td.getDate();
@@ -32,11 +32,10 @@ export class OrdersComponent implements OnInit {
 
   getAllOrders() {
       this.ordersServive.getOrders()
-          .subscribe((results:any) => {
-              if(results.success) {
-                  console.log("!!!");
-                  console.log(results);
-                  
+          .subscribe((results: any) => {
+              if (results.success) {
+                  // console.log('!!!');
+                  // console.log(results);
                   this.todaysOrders = [];
                   this.todayaOrders = [];
                   this.tomorrowsOrders = [];
@@ -53,56 +52,50 @@ export class OrdersComponent implements OnInit {
                     let year = order.requiredByDate.getFullYear();
                     let month = order.requiredByDate.getMonth();
                     let date = order.requiredByDate.getDate();
-                    
-                    //this.odDate = new Date(order.requiredByDate.getFullYear(),order.requiredByDate.getMonth(),order.requiredByDate.getDate()); 
-                    //console.log(this.odDate);
+                    // this.odDate = new Date(order.requiredByDate.getFullYear(),order.requiredByDate.getMonth(),order.requiredByDate.getDate()); 
+                    // // console.log(this.odDate);
                     if(year == this.y && month == this.m && date == this.d && order.status == "submitted") {
                       this.todaysOrders.push(order);
-                      //console.log(this.todaysOrders);
+                      // // console.log(this.todaysOrders);
                     }else  if(year == this.y && month == this.m && date == this.d && order.status == "approved") {
                       this.todayaOrders.push(order);
-                      //console.log(this.todayaOrders);
+                      // // console.log(this.todayaOrders);
                     }else if(year == this.year && month == this.month && date == this.date && order.status == "submitted") {
                       this.tomorrowsOrders.push(order);
-                      //console.log(this.tomorrowsOrders);
-                    }else if(year == this.year && month == this.month && date == this.date && order.status == "approved") {
+                      // // console.log(this.tomorrowsOrders);
+                    } else if (year == this.year && month == this.month && date == this.date && order.status == "approved") {
                       this.tomorrowaOrders.push(order);
-                      //console.log(this.tomorrowaOrders);
-                    }  
-                    else {
+                      // // console.log(this.tomorrowaOrders);
+                    } else {
                       this.upcomingOrders.push(order);
                     }
-                    
-                    
-                          
                    return;
-                  })
+                  });
               }
           });
   }
 
-  onPlaceOrder(id : any) {
-    let data = {
+  onPlaceOrder(id: any) {
+    const data = {
         orderId : id
     }
-     console.log(data);
+     // console.log(data);
      this.ordersServive.placeOrder(data)
        .subscribe((results:any) => {
-         if(results.success) {
-           console.log(results);
+         if (results.success) {
+           // console.log(results);
            this.getAllOrders();
          } else {
-           console.log(data);
+           // console.log(data);
          }
-       })
+       });
     }
- 
 
   // getArchiveLeads(){
   //   this.archiveleadsservice.getArchiveLeads()
   //     .subscribe((results:any) => {
   //       if(results.success){
-  //         //console.log(results.data);
+  //         //// console.log(results.data);
   //         this.archiveLeads = results.data;
   //       }
   //     }, (err:any) => {})

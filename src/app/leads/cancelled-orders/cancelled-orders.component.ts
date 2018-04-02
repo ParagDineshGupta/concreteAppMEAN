@@ -34,9 +34,8 @@ export class CancelledOrdersComponent implements OnInit {
       this.ordersServive.getCancelledOrders()
           .subscribe((results:any) => {
               if(results.success) {
-                  console.log("!!!");
-                  console.log(results);
-                  
+                  // console.log("!!!");
+                  // console.log(results);
                   this.todaycOrders = [];
                   this.tomorrowcOrders = [];
                   this.upcomingcOrders = [];
@@ -53,20 +52,17 @@ export class CancelledOrdersComponent implements OnInit {
                     let date = order.requiredByDate.getDate();
                     
                     //this.odDate = new Date(order.requiredByDate.getFullYear(),order.requiredByDate.getMonth(),order.requiredByDate.getDate()); 
-                    //console.log(this.odDate);
+                    //// console.log(this.odDate);
                     if(year == this.y && month == this.m && date == this.d) {
                       this.todaycOrders.push(order);
-                      //console.log(this.todaycOrders);
+                      //// console.log(this.todaycOrders);
                     }else if(year == this.year && month == this.month && date == this.date) {
                       this.tomorrowcOrders.push(order);
-                      //console.log(this.tomorrowcOrders);
+                      //// console.log(this.tomorrowcOrders);
                     }  
                     else {
                       this.upcomingcOrders.push(order);
-                    }
-                    
-                    
-                          
+                    }     
                    return;
                   })
               }
@@ -77,14 +73,14 @@ export class CancelledOrdersComponent implements OnInit {
     let data = {
         orderId : id
     }
-     console.log(data);
+     // console.log(data);
      this.ordersServive.placeOrder(data)
        .subscribe((results:any) => {
          if(results.success) {
-           console.log(results);
+           // console.log(results);
            this.getAllOrders();
          } else {
-           console.log(data);
+           // console.log(data);
          }
        })
     }*/

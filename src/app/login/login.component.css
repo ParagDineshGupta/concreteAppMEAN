@@ -5,7 +5,7 @@
 }
 .loginimg{
     background-repeat: no-repeat;
-    background-image: url('../../assets/img/leadB.jpg');
+    background-image: url('../../assets/img/concrete1.jpg');
     background-size: cover;
     min-height:100vh;
 }
@@ -47,4 +47,7 @@ a.active{
 }
 .login-form, .signup-form{
     padding:30px;
+}
+.errMsg{
+    color:#df3423;
 }

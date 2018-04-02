@@ -29,6 +29,10 @@ export class LoginComponent implements OnInit {
     pwd2: new FormControl(),
     city: new FormControl()
   });
+
+  cityName: any = [];
+  isloginForm = true;
+  errMsg: any = '';
   
   displayLogin(){
     if(!this.isloginForm){
@@ -42,8 +46,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  cityName : any = [];
-  isloginForm = true;
 
   constructor(private cookieService: CookieService, private loginservice:LoginService, private router: Router) { }
 
@@ -55,25 +57,26 @@ export class LoginComponent implements OnInit {
       username: this.loginform.value.email,
       password: this.loginform.value.pwd
     }
-    //console.log(data);
+    //// console.log(data);
     this.loginservice.logInUser(data)
       .subscribe((results:any) => {
-        //console.log(results);
+        //// console.log(results);
         if(results.success){
-          //console.log("login successful");
-          //console.log(results);
+          //// console.log("login successful");
+          //// console.log(results);
           if(results.confirmedAccount){
             this.cookieService.set('User', results.token);
-            //console.log(this.cookieService.get('User'));
+            //// console.log(this.cookieService.get('User'));
             this.router.navigate(['/']);
           }else{
             this.showNotification('top', 'right', 'Your Account hasn\'t been verified by Admin yet. Please contact at customercare@equipshare.in or give a call at +91-879797790.')
           }
         }else{
-          console.log(results);
+          this.errMsg = results.msg;
+          //// console.log(results);
         }
       }, (err:any) => {
-        //console.log(err);
+        //// console.log(err);
       })
   }
 
@@ -82,13 +85,14 @@ export class LoginComponent implements OnInit {
     this.loginservice.getAllCities()
       .subscribe((results:any) => {
         if(results.success) {
-          console.log(results);
+          //// console.log(results);
           this.cityName = [];
           results.cities.forEach( (cities) => {
             this.cityName.push(cities);
-            console.log(this.cityName);
+            //// console.log(this.cityName);
           })
         
+          
         }
       })
   }
@@ -107,7 +111,7 @@ export class LoginComponent implements OnInit {
 
     this.loginservice.signupUser(data)
       .subscribe((results:any) => {
-        console.log(results);
+        // console.log(results);
         if(results.success){
           this.showNotification('top','right', 'Your account has been created. Please wait atleast 24 hours before your account is verified by a Equipshare Admin. After that you can login and enjoy our services.')
           this.displayLogin();

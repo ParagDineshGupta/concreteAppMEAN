@@ -7,9 +7,12 @@ var svgCaptcha = require('svg-captcha');
 var jwt = require('jsonwebtoken');
 var secret="supersecret";
 var async = require('async');
+var bcrypt = require('bcrypt');
 //importing passport and its local strategy
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var sendgridUser = process.env.SENDGRID_USERNAME;
+var sendgridPass = process.env.SENDGRID_PASS;
 //var LocalStrategy = require('passport-local').Strategy;
 
 //here we import the User model
@@ -26,7 +29,7 @@ var PO = require('../models/PurchaseOrder');
 router.get('/', isAuthenticated, function(req, res, next){
 	// Quote.getAllQuotesForSupplier(function(err, quotes){
 	// 	res.render('users', {
-	// 		quotes:quotes
+	// 		quotes
 	// 	})
 	// })
 	var userId = res.locals.userId;
@@ -271,25 +274,21 @@ router.post('/profile', function(req, res){
 			return;
 		}
 		var userId =  decoded.id;
-	
 		var id = userId;
 		var name = req.body.name;
 		var email = req.body.email;
 		var contact = req.body.contact;
 		var pan = req.body.pan;
 		var gstin = req.body.gstin;
-		var customerSite = req.body.customerSite;
 
 		console.log(req.body.name);
 		console.log(name);
 
-		req.checkBody('id', 'id cannot be empty').notEmpty();
 		req.checkBody('name', 'Name cannot be empty').notEmpty();
 		req.checkBody('email', 'Email cannot be empty').notEmpty();
 		req.checkBody('contact', 'contact cannot be empty').notEmpty();
 		req.checkBody('pan', 'Pan cannot be empty').notEmpty();
 		req.checkBody('gstin', 'GSTIN cannot be empty').notEmpty();
-		req.checkBody('customerSite', 'Site cannot be empty').notEmpty();
 		req.checkBody('email', "Enter a valid email").isEmail();
 		
 		var errors = req.validationErrors();
@@ -303,18 +302,22 @@ router.post('/profile', function(req, res){
 			})
 		}else{
 			User.findOneById(id, function(err, user){
-				if(err)throw err;
+				if(err){
+					handleError(err, 'there was some error retrieving the profile', res);
+					return;
+				};
 				user.name = name;
 				user.email = email;
 				user.contact = contact;
 				user.pan = pan;
 				user.gstin = gstin;
-				user.customerSite = customerSite;
 
 				User.updateUser(id, user, function(err){
-					if(err)throw err;
-					res.send("update user successful" + user);
-					res.josn({
+					if(err){
+						handleError(err, 'error updating user details', res);
+						return;
+					}
+					res.json({
 						success:true,
 						msg:" user profile update successful"
 					})
@@ -322,7 +325,62 @@ router.post('/profile', function(req, res){
 			})
 		}
 	})
-})
+});
+
+
+router.post('/changepass', function(req, res){
+	var oldpass = req.body.oldpass;
+	var newpass = req.body.newpass;
+	var newpass2 = req.body.newpass2;
+
+	jwt.verify(req.headers.authorization, secret, function(err, decoded){
+		if(err){
+			console.log(req.headers.authorization)
+			console.log("%%%%%%%%%%%%%%%%%%%" + err);
+			res.json({
+				success:false,
+				msg:"some error occured"
+			})
+			return;
+		}
+		var userId = decoded.id;
+
+		User.findById(userId, function(err, user){
+			if(err){
+				handleError(err, '', res);
+				return;
+			}
+			bcrypt.compare(oldpass, user.password, function(err, match) {
+				if(!match){
+					res.json({
+						success:false,
+						msg:'old password is not correct'
+					});
+					return;
+				}
+				if(newpass != newpass2){
+					res.json({
+						success:false,
+						msg:'passwords do not match'
+					});
+					return;
+				}
+				bcrypt.hash(newpass, 10, function(err, hash){
+					if(err){
+						handleError(err, '', res);
+						return;
+					}
+					user.password = hash;
+					user.save();
+					res.json({
+						success:true,
+						msg:'password updates successfully'
+					});
+				});
+			});
+		})
+	});
+});
 
 
 
@@ -331,7 +389,8 @@ router.get('/history', function(req, res){
 
 	jwt.verify(req.headers.authorization, secret, function(err, decoded){
 		if(err){
-			//console.log("%%%%%%%%%%%%%%%%%%%" + err);
+			console.log(req.headers.authorization)
+			console.log("%%%%%%%%%%%%%%%%%%%" + err);
 			res.json({
 				success:false,
 				msg:"some error occured"
@@ -339,8 +398,10 @@ router.get('/history', function(req, res){
 			return;
 		}
 		var userId =  decoded.id;
-
-		Order.getAllOrderdBySupplierId(userId, function(err, orders){
+		let d = new Date();
+		var y = new Date(d.getTime()-(d.getHours() * 60*60*1000 + d.getMinutes()*60*1000 + d.getSeconds()*2000));
+		console.log("about to get orders");
+		Order.getAllOrderdBySupplierId(userId, y.getTime(), function(err, orders){
 			res.json({
 				success:true,
 				results:orders
@@ -356,9 +417,15 @@ router.post('/forgot', function(req, res){
 	var email = req.body.email;
 	
 	User.findOneByEmail(email, function(err, user){
-		if(err)throw err;
+		if(err){
+			handleError(err, '', res);
+			return;
+		};
 		if(!user){
-			res.send("no user with this username exists");
+			res.json({
+				success: true,
+				results:"no user with this username exists"
+			});
 		}
 		crypto.randomBytes(20, function(err, buf){
 			if(err)throw err;
@@ -373,10 +440,10 @@ router.post('/forgot', function(req, res){
 			var smtpTransport = nodemailer.createTransport({
 				service:'SendGrid',
 				auth:{
-					user:'jarvis123',
-					pass:'abhansh@123'
+					user:sendgridUser,
+					pass:sendgridPass
 				}
-			})
+			});
 			var mailOptions = {
 				to:user.email,
 				from:'passwordreset@demo.com',
@@ -578,8 +645,41 @@ router.get('/pendingorders', function(req, res){
 			return;
 		}
 		var userId =  decoded.id;
-	
-		Order.getOrdersForResponseBySupplierId(userId, function(err, orders){
+		let d = new Date();
+		var y = new Date(d.getTime()-(d.getHours() * 60*60*1000 + d.getMinutes()*60*1000 + d.getSeconds()*1000))
+		console.log(y);
+		Order.getOrdersForResponseBySupplierId(userId, y.getTime(), function(err, orders){
+			if(err){
+				res.json({
+					success:false,
+					msg:"some error occured"
+				})
+				return;
+			};
+			res.json({
+				success:true,
+				results:orders
+			});
+		});
+	});
+});
+
+
+
+router.get('/cancelledorders', function(req, res){
+	jwt.verify(req.headers.authorization, secret, function(err, decoded){
+		if(err){
+			//console.log("%%%%%%%%%%%%%%%%%%%" + err);
+			res.json({
+				success:false,
+				msg:"some error occured"
+			})
+			return;
+		}
+		var userId =  decoded.id;
+		let d = new Date();
+		var y = new Date(d.getTime()-(d.getHours() * 60*60*1000 + d.getMinutes()*60*1000 + d.getSeconds()*1000))
+		Order.getCancelledOrdersForResponseBySupplierId(userId, y.getTime(), function(err, orders){
 			if(err){
 				res.json({
 					success:false,
@@ -618,6 +718,7 @@ router.post('/pendingorders', function(req, res){
 		});
 	});
 });
+
 
 router.post('/completeorder', function(req, res){
 	var status = 'completed';

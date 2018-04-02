@@ -12,3 +12,9 @@
     font-size:18px;
     width:95%;
 }
+.errMsg{
+    color:#de3423;
+}
+.successMsg{
+    color:#34df24;
+}

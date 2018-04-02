@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit{
         this.dashboardService.getAllQuotes()
             .subscribe((results:any) => {
                 if(results.success){
-                    console.log(results);
+                    // console.log(results);
                     this.aQuotes = results.aQuotes;
                     this.uQuotes = results.uQuotes;
                     this.aQuotes.forEach(element => {
@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit{
                     
                     return;
                 }
-            console.log(results);
+            // console.log(results);
 
         })
     }
@@ -81,23 +81,23 @@ export class DashboardComponent implements OnInit{
     }
 
     onSubmit() {
-        //console.log(this.responseForm);
+        //// console.log(this.responseForm);
         let data = {
             price: this.responseForm.value.price,
             validTill: this.responseForm.value.validTill,
             quoteId: this.responseForm.value.quoteId
         }
-        console.log(data);
+        // console.log(data);
         this.dashboardService.answerQuote(data)
             .subscribe((results:any) => {
                 if(results.success){
-                   // console.log("@@@@@@@@@");
-                    console.log(results);
+                   // // console.log("@@@@@@@@@");
+                    // console.log(results);
                     this.getAllQuotations();
 
                 } else {
-                    console.log(data);
-                    console.log(results);
+                    // console.log(data);
+                    // console.log(results);
                 }
 
             })
@@ -110,16 +110,16 @@ export class DashboardComponent implements OnInit{
             responseId: this.delresponseForm.value.responseId
   
         }
-        console.log(data);
+        // console.log(data);
         this.dashboardService.deleteQuote(data)
             .subscribe((results:any) => {
                 if(results.success){
-                   // console.log("@@@@");
-                    console.log(results);
+                   // // console.log("@@@@");
+                    // console.log(results);
                     
                 } else {
-                    //console.log(data);
-                    console.log(results);
+                    //// console.log(data);
+                    // console.log(results);
                 }
 
             })

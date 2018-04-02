@@ -2,14 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './user/user.component';
-import { LeadsComponent } from './leads/leads.component';
-import { AddLeadsComponent } from './leads/add-leads/add-leads.component';
 import { PurchaseOrderComponent } from './leads/purchase-order/purchase-order.component';
 import { OrdersComponent } from './leads/orders/orders.component';
-import { AllUsersComponent } from './all-users/all-users.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth/auth-guard';
 import { CancelledOrdersComponent } from './leads/cancelled-orders/cancelled-orders.component';
+import { HistoryComponent } from './leads/history/history.component';
 
 
 const routes: Routes = [
@@ -19,48 +17,38 @@ const routes: Routes = [
     pathMatch:'full'
   },
   {
-	  path:'dashboard',
+	  path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard]
   },
   {
-	  path:'user',
+	  path: 'user',
     component:UserComponent,
     canActivate: [AuthGuard]
   },
   {
-	  path: 'leads',
-    component:LeadsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path:'archiveleads',
+    path:'cancelled',
     component: CancelledOrdersComponent,
     canActivate: [AuthGuard]
   },
   {
-    path:'allleads',
+    path:'history',
+    component: HistoryComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'purchase',
     component:PurchaseOrderComponent,
     canActivate: [AuthGuard]
   },
   {
-    path:'archive',
+    path:'orders',
     component:OrdersComponent,
     canActivate: [AuthGuard]
   },
   {
     path:'cancelorder',
     component:CancelledOrdersComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path:'allusers',
-    component:AllUsersComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path:'addleads/:id/:email',
-    component: AddLeadsComponent,
     canActivate: [AuthGuard]
   },
   {

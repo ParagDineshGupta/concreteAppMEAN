@@ -25,8 +25,8 @@ export class PurchaseOrderComponent implements OnInit {
         if(results.success) {
           this.aQuotes = [];
           this.uQuotes = [];
-         console.log("@@@"); 
-         console.log(results);
+         // console.log("@@@"); 
+         // console.log(results);
          results.resuts.forEach( (porder) => {
             if(porder.confirmedBySupplier){
               // var t = new Date( porder.generationDate * 1 );
@@ -37,16 +37,16 @@ export class PurchaseOrderComponent implements OnInit {
             }else{
               // var t = new Date( porder.generationDate * 1 );
               // porder.generationDate = t.toString().substr(0, 25);
-              // console.log(porder.validTill)
+              // // console.log(porder.validTill)
               // var t = new Date( porder.validTill * 1 );
-              // console.log(t)
+              // // console.log(t)
               // porder.validTill = t.toString().substr(0, 25);
               this.uQuotes.push(porder);
             }
          })
          return;
         }
-        console.log(results);
+        // console.log(results);
       });
   }
   
@@ -55,14 +55,14 @@ export class PurchaseOrderComponent implements OnInit {
      let data = {
        POId : id
      }
-     console.log(data);
+     // console.log(data);
      this.poService.confirmOrders(data)
          .subscribe((results:any) => {
             if(results.success) {
-              console.log(results);
+              // console.log(results);
               this.getOrders();
             } else {
-              console.log(data);
+              // console.log(data);
             }
          })
   }
