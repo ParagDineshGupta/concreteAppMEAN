@@ -561,7 +561,7 @@ router.post('/forgot', function(req, res){
             };
             smtpTransport.sendMail(mailOptions, function(err){
                 if(err){
-                    return handleError(err, msg, res);
+                    return handleError(err, '', res);
                 }
                 res.json({
                     success:true,
