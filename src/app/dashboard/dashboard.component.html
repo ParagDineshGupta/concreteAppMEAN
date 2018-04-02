@@ -10,7 +10,7 @@
         <div class="col-md-12 col-sm-12">
           <div class="panel panel-primary" id="dashboard-top-panel">
             <div class="panel-body " id="dashboard-top-panel-body">
-              <span class="fa fa-paper-plane"></span>Quotations Waiting To be Responded</div>
+              <span class="fa fa-paper-plane"></span>Request For Quotes (RFQ) <span class="label label-warning">{{requestQuoteCount}}</span>  </div>
           </div>
           <div class="orders">
             <div class=" orderBlock1" *ngFor="let quote of uQuotes">
@@ -63,7 +63,7 @@
         <div class="col-md-12 col-sm-12" id="top-panel">
           <div class="panel panel-primary" id="dashboard-top-panel">
             <div class="panel-body " id="dashboard-top-panel-body">
-              <span class="fa fa-paper-plane"></span>Quotations Responded</div>
+              <span class="fa fa-paper-plane"></span>Quotations Submitted <span class="label label-success">{{submittedQuoteCount}}</span></div>
           </div>
           <div class="orders">
             <div class=" orderBlock" *ngFor="let quote of aQuotes">

@@ -19,9 +19,11 @@ declare var $:any;
 
 export class DashboardComponent implements OnInit{
     
-    aQuotes:any = [];//answered quotes
-    uQuotes:any = [];//unanswered quotes
-    quoteId : any;
+    aQuotes: any = [];// answered quotes
+    uQuotes: any = [];// unanswered quotes
+    quoteId: any;
+    submittedQuoteCount: any;
+    requestQuoteCount: any ;
     @ViewChild('f') delresponseForm: NgForm;
     
 
@@ -29,7 +31,7 @@ export class DashboardComponent implements OnInit{
     constructor(private dashboardService: DashboardService, private router: Router
     ){}
 
-    responseForm : FormGroup;
+    responseForm: FormGroup;
     enableRes  = false;
     
     ngOnInit(){
@@ -47,7 +49,9 @@ export class DashboardComponent implements OnInit{
             .subscribe((results:any) => {
                 if(results.success){
                     // console.log(results);
+                    this.requestQuoteCount = results.uQuotes.length;
                     this.aQuotes = results.aQuotes;
+                    this.submittedQuoteCount = results.uQuotes.length;
                     this.uQuotes = results.uQuotes;
                     this.aQuotes.forEach(element => {
                         element.requiredDate = new Date(element.requiredDate * 1)
