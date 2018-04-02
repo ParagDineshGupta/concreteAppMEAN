@@ -49,9 +49,9 @@ export class DashboardComponent implements OnInit{
             .subscribe((results:any) => {
                 if(results.success){
                     // console.log(results);
+                    this.submittedQuoteCount = results.aQuotes.length;
                     this.requestQuoteCount = results.uQuotes.length;
                     this.aQuotes = results.aQuotes;
-                    this.submittedQuoteCount = results.uQuotes.length;
                     this.uQuotes = results.uQuotes;
                     this.aQuotes.forEach(element => {
                         element.requiredDate = new Date(element.requiredDate * 1)
