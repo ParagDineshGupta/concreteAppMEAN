@@ -508,11 +508,7 @@ router.get('/history', function(req, res){
             return;
         }
         var userId =  decoded.id;
-        let d = new Date();
-        var y = new Date(d.getTime()-(d.getHours() * 60*60*1000 + d.getMinutes()*60*1000 + d.getSeconds()*2000));
-        console.log(y.getTime());
-        console.log(y);
-        Order.getAllOrderdByUserId( userId, y.getTime(), function(err, orders){
+        Order.getAllOrderdByUserId( userId, function(err, orders){
             res.json({
                 success:true,
                 orders:orders 

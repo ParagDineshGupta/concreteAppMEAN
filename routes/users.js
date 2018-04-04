@@ -645,10 +645,8 @@ router.get('/pendingorders', function(req, res){
 			return;
 		}
 		var userId =  decoded.id;
-		let d = new Date();
-		var y = new Date(d.getTime()-(d.getHours() * 60*60*1000 + d.getMinutes()*60*1000 + d.getSeconds()*1000))
 		console.log(y);
-		Order.getOrdersForResponseBySupplierId(userId, y.getTime(), function(err, orders){
+		Order.getOrdersForResponseBySupplierId(userId, function(err, orders){
 			if(err){
 				res.json({
 					success:false,
@@ -677,9 +675,7 @@ router.get('/cancelledorders', function(req, res){
 			return;
 		}
 		var userId =  decoded.id;
-		let d = new Date();
-		var y = new Date(d.getTime()-(d.getHours() * 60*60*1000 + d.getMinutes()*60*1000 + d.getSeconds()*1000))
-		Order.getCancelledOrdersForResponseBySupplierId(userId, y.getTime(), function(err, orders){
+		Order.getCancelledOrdersForResponseBySupplierId(userId,  function(err, orders){
 			if(err){
 				res.json({
 					success:false,

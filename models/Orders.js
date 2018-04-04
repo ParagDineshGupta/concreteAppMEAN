@@ -78,18 +78,18 @@ module.exports.cancelOrder = function(orderId, reason, callback){
 }   
 
 
-module.exports.getOrdersForResponseBySupplierId = function(id, date, callback){
-    Order.find({ supplierId:id, generationDate: { $gt : date} }, callback);
+module.exports.getOrdersForResponseBySupplierId = function(id, callback){
+    Order.find({ supplierId:id }, callback);
 }
 
 module.exports.getCancelledOrdersForResponseBySupplierId = function(id, date, callback){
-    Order.find({ supplierId:id, status: 'cancelled', generationDate: {$gt: date} }, callback);
+    Order.find({ supplierId:id, status: 'cancelled'}, callback);
 }
 
 module.exports.updatePendingOrder = function(orderId, status, statusDesc, statusDate, callback){
     Order.findOneAndUpdate({_id:orderId}, {status:status, statusDesc:statusDesc, statusDate:statusDate}, callback);
 }
 
-module.exports.getAllOrderdByUserId = function(id, date, callback){
-    Order.find({requestedById:id, generationDate: {$lt: date}}, callback);
+module.exports.getAllOrderdByUserId = function(id,  callback){
+    Order.find({requestedById:id}, callback);
 }
