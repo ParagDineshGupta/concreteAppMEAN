@@ -276,7 +276,7 @@ router.post('/doesexist', function(req, res){
 
 router.post('/getsuppliername', function(req, res){
     var id = req.body.supplierId;
-    console.log(id)
+    console.log(id);
     User.findOneById(id, function(err, user){
         if(err){
             return handleError(err, null, res);
@@ -285,7 +285,7 @@ router.post('/getsuppliername', function(req, res){
         if(user){
             return res.json({
                 success:true,
-                user: user.name
+                supplierName: user.name
             })
         }else{
             return res.json({
@@ -506,10 +506,11 @@ router.get('/history', function(req, res){
             return;
         }
         var userId =  decoded.id;
-
-
-        Order.getAllOrderdByUserId( userId, function(err, orders){
+        let d = new Date();
+		var y = new Date(d.getTime()-(d.getHours() * 60*60*1000 + d.getMinutes()*60*1000 + d.getSeconds()*2000));
+        Order.getAllOrderdByUserId( userId, y.getTime(), function(err, orders){
             res.json({
+                success:true,
                 orders:orders 
             });
         });
@@ -550,6 +551,8 @@ router.post('/forgot', function(req, res){
                     pass:sendgridPass
                 }
             });
+            console.log(sendgridUser);
+            console.log(sendgridPass);
             var mailOptions = {
                 to:user.email,
                 from:'passwordreset@demo.com',
