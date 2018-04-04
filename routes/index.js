@@ -10,6 +10,7 @@ var svgCaptcha = require('svg-captcha');
 var async = require('async');
 var jwt = require('jsonwebtoken');
 const secret = "supersecretkey";
+var bcrypt = require('bcrypt');
 
 //importing passport and its local strategy
 var passport = require('passport');
@@ -191,7 +192,7 @@ router.post('/changepass', function(req, res){
 	var oldpass = req.body.oldpass;
 	var newpass = req.body.newpass;
 	var newpass2 = req.body.newpass2;
-
+    console.log(req.body);
 	jwt.verify(req.headers.authorization, secret, function(err, decoded){
 		if(err){
 			console.log(req.headers.authorization)
@@ -208,7 +209,8 @@ router.post('/changepass', function(req, res){
 			if(err){
 				handleError(err, '', res);
 				return;
-			}
+            }
+            console.log(oldpass, newpass);
 			bcrypt.compare(oldpass, user.password, function(err, match) {
 				if(!match){
 					res.json({
