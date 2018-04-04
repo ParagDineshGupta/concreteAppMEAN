@@ -91,5 +91,5 @@ module.exports.updatePendingOrder = function(orderId, status, statusDesc, status
 }
 
 module.exports.getAllOrderdByUserId = function(id, date, callback){
-    Order.find({supplierId: id, generationDate: {$lt: date}}, callback);
+    Order.find({requestedById:id, generationDate: {$lt: date}}, callback);
 }
